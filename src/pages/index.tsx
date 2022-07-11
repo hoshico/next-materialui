@@ -1,4 +1,5 @@
 import EmotionButton from 'components/EmotionButton'
+import StyledEmotionButton from 'components/StyledEmotion'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -19,6 +20,7 @@ const Home: NextPage = () => {
         </h1>
 
         <EmotionButton />
+        <StyledEmotionButton />
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.tsx</code>
