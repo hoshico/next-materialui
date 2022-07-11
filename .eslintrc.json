@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "pulugin": ["@emotio"],
+  "rules": {
+    "@emotion/jsx-import": "error",
+    "@emotion/no-vanila": "error",
+    "@emotion/import-from-emotion": "error",
+    "@emotion/styled-import": "error"
+  }
 }
