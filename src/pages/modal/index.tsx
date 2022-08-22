@@ -263,6 +263,7 @@ const Modal: NextPage = () => {
                     <Button size="small" onClick={() => handleClickOpen(index)}>
                       追加
                     </Button>
+
                     {/*フェーズ作成ダイアログ*/}
                     <Dialog
                       open={open}
@@ -270,6 +271,7 @@ const Modal: NextPage = () => {
                       aria-labelledby="alert-dialog-title"
                       aria-dexcribeby="alert-dialog-description"
                     >
+                      {/* TODO: titleをpropsで渡す */}
                       <DialogTitle>{publishingFlow[modalIndex].title}</DialogTitle>
                       <DialogContent>
                         <Box mt={2}>
@@ -354,6 +356,7 @@ const Modal: NextPage = () => {
                         )}
                       </DialogActions>
                     </Dialog>
+                    
                   </Stack>
                   <Box display="flex" sx={{ flexWrap: 'wrap' }}>
                     {flow.phases.map((phase, index) => (
