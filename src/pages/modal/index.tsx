@@ -1,4 +1,3 @@
-import { SettingsOutlined, TransgenderTwoTone } from '@mui/icons-material'
 import {
   Button,
   Card,
@@ -115,7 +114,7 @@ const Modal: NextPage = () => {
   const [personName, setPersonName] = useState<string[]>([])
   const [approvalName, setApprovalName] = useState<string[]>([])
   const [target, setTarget] = useState<{ phases: PhaseProps[]; index: number }>()
-
+  
   // ダイアログopen
   const handleClickOpen = (index: number) => {
     setName('')
@@ -264,14 +263,13 @@ const Modal: NextPage = () => {
                       追加
                     </Button>
 
-                    {/*フェーズ作成ダイアログ*/}
+                    {/*フェーズ作成ダイアログ TODO: titleをpropsで渡す*/}
                     <Dialog
                       open={open}
                       onClose={handleClose}
                       aria-labelledby="alert-dialog-title"
                       aria-dexcribeby="alert-dialog-description"
                     >
-                      {/* TODO: titleをpropsで渡す */}
                       <DialogTitle>{publishingFlow[modalIndex].title}</DialogTitle>
                       <DialogContent>
                         <Box mt={2}>
