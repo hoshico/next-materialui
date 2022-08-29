@@ -1,6 +1,60 @@
-import { Box, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, ListItemText, MenuItem, Select } from "@mui/material"
+import {
+  Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  OutlinedInput,
+  Select
+} from '@mui/material'
 
-export const PhaseModal = () => {
+type UserProps = {
+  id: string
+  email: string
+  displayName: string
+  roles: string[]
+}
+type PhaseProps = {
+  name: string
+  input: UserProps[]
+  approval: UserProps[]
+}
+
+// 入力者・承認者フォーム
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
+export const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
+    }
+  }
+}
+
+export const PhaseDetailModal = (props: any) => {
+  const {
+    modalIndex,
+    userArry,
+    publishingFlow,
+    editMode,
+    open,
+    name,
+    personName,
+    approvalName,
+    handleChange,
+    handleApprovalChange,
+    handleClose,
+    handleDeleteClose,
+    handleAddPhase,
+    handleChangeName
+  } = props
   return (
     <Dialog
       open={open}
@@ -21,7 +75,7 @@ export const PhaseModal = () => {
               style={{ minWidth: 150 }}
               displayEmpty
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChangeName}
             >
               <MenuItem value="設計区">設計区</MenuItem>
               <MenuItem value="サービス・サポート区">サービス・サポート区</MenuItem>
@@ -43,7 +97,7 @@ export const PhaseModal = () => {
               renderValue={(selected) => selected.join(',')}
               MenuProps={MenuProps}
             >
-              {userArry.map((user) => (
+              {userArry.map((user: UserProps) => (
                 <MenuItem key={user.displayName} value={user.displayName}>
                   <Checkbox checked={personName.indexOf(user.displayName) > -1} />
                   <ListItemText primary={user.displayName} />
@@ -66,7 +120,7 @@ export const PhaseModal = () => {
               renderValue={(selected) => selected.join(',')}
               MenuProps={MenuProps}
             >
-              {userArry.map((user) => (
+              {userArry.map((user: UserProps) => (
                 <MenuItem key={user.displayName} value={user.displayName}>
                   <Checkbox checked={approvalName.indexOf(user.displayName) > -1} />
                   <ListItemText primary={user.displayName} />
@@ -96,4 +150,4 @@ export const PhaseModal = () => {
   )
 }
 
-export default PhaseModal
+export default PhaseDetailModal

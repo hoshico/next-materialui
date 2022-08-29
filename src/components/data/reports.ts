@@ -1,0 +1,42 @@
+export const reports = [
+  {
+    id: 1,
+    number: "111111",
+    url: "https://www.sample.com",
+    cvename: "脆弱性サンプル2",
+    cveList: ["CVE-5555-5555", "CVE-6666-6666"],
+    title: "脆弱性サンプル1",
+    presence: "有り",
+    severity: "high",
+  },
+  {
+    id: 2,
+    number: "222222",
+    url: "https://www.sample.com",
+    cvename: "脆弱性サンプル3",
+    cveList: ["CVE-5555-5555", "CVE-6666-6666"],
+    title: "脆弱性サンプル2",
+    presence: "有り",
+    severity: "high",
+  },
+  {
+    id: 3,
+    number: "333333",
+    url: "https://www.sample.com",
+    cvename: "脆弱性サンプル2",
+    cveList: ["CVE-5555-5555", "CVE-6666-6666"],
+    title: "脆弱性サンプル3",
+    presence: "有り",
+    severity: "high",
+  },
+  {
+    id: 4,
+    number: "444444",
+    url: "https://www.sample.com",
+    cvename: "脆弱性サンプル2",
+    cveList: ["CVE-5555-5555", "CVE-6666-6666"],
+    title: "脆弱性サンプル4",
+    presence: "有り",
+    severity: "high",
+  }
+];
