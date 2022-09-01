@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export const useAlert = () => {
-  const [alertState, setAlertState] = useState(false);
+  const [alertState, setAlertState] = useState(false)
   const openAlert = () => {
-    setAlertState(true);
-  };
+    setAlertState(true)
+  }
   const closeAlert = () => {
-    setAlertState(false);
+    setAlertState(false)
   }
   const type = () => {
     return 
