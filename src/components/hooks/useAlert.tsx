@@ -8,12 +8,6 @@ export const useAlert = () => {
   const closeAlert = () => {
     setAlertState(false)
   }
-  const type = () => {
-    return 
-  };
-  const message = () => {
-    return 
-  }
 
-  return { alertState, openAlert, closeAlert, type, message }
+  return { alertState, openAlert, closeAlert }
 };
