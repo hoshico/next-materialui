@@ -53,7 +53,7 @@ const InputListPage = () => {
                 </Box>
               </Box>
               {/*cweゾーン*/}
-              <Box m={2}>
+              <Box m={4} ml={6}>
                 <Box mt={2} sx={{ display: 'flex', alignItems: 'center' }}>
                   <TextField variant="outlined" label="cwe番号" value={cwe} onChange={(e) => setCwe(e.target.value)} />
                   <Box ml={2}>
