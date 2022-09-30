@@ -27,14 +27,8 @@ const inputListPage02 = () => {
     }
   ])
   const [cve, setCve] = useState("");
-  //  const [cwe, setCwe] = useState('')
-  //  const [cweList, setCweList] = useState<string[]>([])
-  //
-  //  const [cveItem, setCveItem] = useState<CveType>({
-  //    cve: '',
-  //    cwe: cweList
-  //  })
-
+  const [cwe, setCwe] = useState('')
+ 
   //cve(親)
   const onClickAdd = () => {
     const newAdvisoryCve = {
@@ -50,32 +44,14 @@ const inputListPage02 = () => {
       setAdvisoryCveList([newAdvisoryCve]);
       setCve("");
     }
-    //const newCveList = [...cveList, cveItem]
-    //setCveList(newCveList)
-    //setCveItem({
-    //  cve: '',
-    //  cwe: []
-    //})
+    
   }
   const onClickRemove = (index: number) => {
     console.log(index)
     advisoryCveList!.splice(index, 1)
     const removeAdvisoryCveList = [...advisoryCveList!]
     setAdvisoryCveList(removeAdvisoryCveList)
-    //setCweList([])
   }
-  //cwe(子)
-  //const onClickCweAdd = (index: number) => {
-  //  //const targetCveItem = cveList[index];
-  //  const newCweList = [...cweList, cwe]
-  //  setCweList(newCweList)
-  //  setCwe('')
-  //}
-  //const onClickCweRemove = (index: number) => {
-  //  cweList.splice(index, 1)
-  //  const removeCweList = [...cweList]
-  //  setCweList(removeCweList)
-  //}
   return (
     <>
       <Box m={2}>
@@ -102,6 +78,30 @@ const inputListPage02 = () => {
                     削除
                   </Button>
                 </Box>
+              </Box>
+              {/*cweゾーン*/}
+              <Box m={4} ml={6}>
+                <Box mt={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                  <TextField variant="outlined" label="cwe番号" value={cwe} onChange={(e) => setCwe(e.target.value)} />
+                  <Box ml={2}>
+                    <Button variant="outlined" onClick={() => onClickCweAdd(index)}>
+                      追加
+                    </Button>
+                  </Box>
+                </Box>
+                {listItem.cwe.length > 0 &&
+                  listItem.cwe.map((cwe, index) => (
+                    <Box key={index}>
+                      <Box mt={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography>・{cwe}</Typography>
+                        <Box ml={2}>
+                          <Button variant="outlined" onClick={() => onClickCweRemove(index)}>
+                            削除
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Box>
+                  ))}
               </Box>
             </Box>
           ))}
