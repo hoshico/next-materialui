@@ -1,11 +1,24 @@
-import { Box, Button, Grid, Stack, TextField } from '@mui/material'
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+  FormLabel,
+  Grid,
+  RadioGroup,
+  Stack,
+  TextField
+} from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
   title: string;
-  importance: boolean;
+  important: boolean;
   score: number;
-  date: Date;
+  date: Date | null;
 }
 const reactForm = () => {
   const { control, handleSubmit } = useForm<Inputs>({
@@ -13,10 +26,10 @@ const reactForm = () => {
       defaultValuesで初期値を設定
     */
     defaultValues: {
-      title: '脆弱性',
-      importance: false,
+      title: '脆弱性タイトル',
+      important: false,
       score: 0,
-      date: new Date(),
+      date: new Date()
     }
   })
   /*
@@ -27,7 +40,10 @@ const reactForm = () => {
     title: {
       required: '名前を入力してください',
       minLength: { value: 4, message: '4文字以上で入力してください。' }
-    }
+    },
+    important: {},
+    score: {},
+    date: {}
   }
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => console.log(data)
@@ -35,6 +51,7 @@ const reactForm = () => {
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
       <Box>
+        {/*タイトル*/}
         <Box>
           <Controller
             // nameはInputsで定義されてるkeyに制限される
@@ -52,22 +69,15 @@ const reactForm = () => {
             )}
           />
         </Box>
+        {/*重要性*/}
         <Box mt={2}>
           <Controller
-            name="importance"
+            name="important"
+            render={({ field, fieldState }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
             control={control}
-            //rules={validationRules.name}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                type="text"
-                label="重要性"
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
           />
         </Box>
+        {/*スコア*/}
         <Box mt={2}>
           <Controller
             name="score"
@@ -84,22 +94,17 @@ const reactForm = () => {
             )}
           />
         </Box>
-        <Box mt={2}>
+        {/*公開日*/}
+        {/*<Box mt={2}>
           <Controller
             name="date"
             control={control}
-            //rules={validationRules.name}
+            rules={validationRules.date}
             render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                type="text"
-                label="公開日"
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
+              
             )}
           />
-        </Box>
+        </Box>*/}
         <Grid mt={2}>
           <Button variant="contained" type="submit">
             確定
