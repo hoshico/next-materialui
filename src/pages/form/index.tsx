@@ -4,8 +4,9 @@ import { useState } from 'react';
 const FormPage = () => {
   const [name, setName] = useState("");
   const onSubmit = (e:any) => {
+    // preventDefaultのためにeが必要
     e.preventDefault()
-    console.log(`submit ${e.target.value}`)
+    console.log(`submit`)
   };
   const onDetermined = () => {
     console.log(`${name}を送信しました`)
