@@ -15,13 +15,17 @@ import {
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string;
-  important: boolean;
-  score: number;
-  date: Date | null;
+  title: string
+  important: boolean
+  score: number
+  date: Date | null
 }
 const reactForm = () => {
-  const { control, handleSubmit } = useForm<Inputs>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors: formErrors }
+  } = useForm<Inputs>({
     /* 
       defaultValuesで初期値を設定
     */
@@ -42,7 +46,10 @@ const reactForm = () => {
       minLength: { value: 4, message: '4文字以上で入力してください。' }
     },
     important: {},
-    score: {},
+    score: {
+      min: 0,
+      max: 10
+    },
     date: {}
   }
   // dataでアクセスできる
@@ -73,26 +80,29 @@ const reactForm = () => {
         <Box mt={2}>
           <Controller
             name="important"
-            render={({ field, fieldState }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
+            render={({ field }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
             control={control}
           />
         </Box>
         {/*スコア*/}
         <Box mt={2}>
-          <Controller
-            name="score"
-            control={control}
-            //rules={validationRules.name}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                type="text"
-                label="スコア"
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
+            <Controller
+              name="score"
+              control={control}
+              rules={validationRules.score}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  style={{ width: "150px"}}
+                  type="number"
+                  inputProps={{ min: 0, max: 20, step: '0.1' }}
+                  label="スコア"
+                  // !!falseyな値→false
+                  error={!!formErrors.score}
+                  helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
+                />
+              )}
+            />
         </Box>
         {/*公開日*/}
         {/*<Box mt={2}>
