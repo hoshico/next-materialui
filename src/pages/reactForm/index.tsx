@@ -15,10 +15,11 @@ import {
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string
-  important: boolean
-  score: number
-  date: Date | null
+  title: string;
+  important: boolean;
+  score: number;
+  score2: number;
+  date: Date | null;
 }
 const reactForm = () => {
   const {
@@ -33,6 +34,7 @@ const reactForm = () => {
       title: '脆弱性タイトル',
       important: false,
       score: 0,
+      score2: 0,
       date: new Date()
     }
   })
@@ -48,7 +50,13 @@ const reactForm = () => {
     important: {},
     score: {
       min: 0,
-      max: 10
+      max: 10,
+      maxLength: { value: 3, message: '4文字以上で入力してください。'}
+    },
+    score2: {
+      min: 0,
+      max: 10,
+      maxLength: { value: 3, message: '3文字以下で入力してください。'}
     },
     date: {}
   }
@@ -100,6 +108,26 @@ const reactForm = () => {
                   // !!falseyな値→false
                   error={!!formErrors.score}
                   helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
+                />
+              )}
+            />
+        </Box>
+        {/*スコア*/}
+        <Box mt={2}>
+            <Controller
+              name="score2"
+              control={control}
+              rules={validationRules.score2}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  style={{ width: "150px"}}
+                  type="number"
+                  inputProps={{ min: 0, max: 20, step: '0.1' }}
+                  label="スコア2"
+                  // !!falseyな値→false
+                  error={fieldState.invalid}
+                  helperText={fieldState.error?.message}
                 />
               )}
             />
