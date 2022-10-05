@@ -12,7 +12,7 @@ import {
   Stack,
   TextField
 } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useWatch } from 'react-hook-form'
 
 type Inputs = {
   title: string;
@@ -23,6 +23,8 @@ type Inputs = {
 }
 const reactForm = () => {
   const {
+    getValues,
+    watch,
     control,
     handleSubmit,
     formState: { errors: formErrors }
@@ -61,7 +63,10 @@ const reactForm = () => {
     date: {}
   }
   // dataでアクセスできる
-  const onSubmit = (data: Inputs) => console.log(data)
+  const onSubmit = (data: Inputs) => console.log(data);
+  const onClcikGet = () => console.log(getValues());
+
+  console.log("render")
   return (
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
@@ -146,6 +151,11 @@ const reactForm = () => {
         <Grid mt={2}>
           <Button variant="contained" type="submit">
             確定
+          </Button>
+        </Grid>
+        <Grid mt={2}>
+          <Button disabled={watch('title') !== "脆弱性"} variant="contained" onClick={onClcikGet}>
+            GET
           </Button>
         </Grid>
       </Box>
