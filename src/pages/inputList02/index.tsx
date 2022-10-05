@@ -10,18 +10,22 @@ const contentInfo = {
 const inputListPage02 = () => {
   const [name, setName] = useState(contentInfo.name || "")
   const [description, setDescription] = useState(contentInfo.description || "")
-  const onSubmit = () => {
-
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    console.log("送信")
   };
   
   return (
     <>
-      <Stack m={6} component="form" onSubmit={onSubmit}>
+      <Stack m={6} component="form" onSubmit={(e) => onSubmit(e)}>
         <Grid>
           <TextField type="text" value={name} onChange={(e) => setName(e.target.value)}/>
         </Grid>
         <Grid mt={2}>
           <TextField type="text" value={description} onChange={(e) => setDescription(e.target.value)}/>
+        </Grid>
+        <Grid mt={2}>
+          <Button variant='contained' type='submit'>送信</Button>
         </Grid>
       </Stack>
     </>
