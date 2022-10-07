@@ -2,24 +2,19 @@ import {
   Box,
   Button,
   Checkbox,
-  FormControl,
   FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  FormLabel,
   Grid,
-  RadioGroup,
   Stack,
   TextField
 } from '@mui/material'
-import { Controller, useForm, useWatch } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string;
-  important: boolean;
-  score: number;
-  score2: number;
-  date: Date | null;
+  title: string
+  important: boolean
+  score: number
+  score2: number
+  date: Date | null
 }
 const reactForm = () => {
   const {
@@ -27,7 +22,7 @@ const reactForm = () => {
     watch,
     control,
     handleSubmit,
-    formState: { errors: formErrors }
+    formState: { errors: formErrors, isDirty, dirtyFields }
   } = useForm<Inputs>({
     /* 
       defaultValuesで初期値を設定
@@ -53,20 +48,26 @@ const reactForm = () => {
     score: {
       min: 0,
       max: 10,
-      maxLength: { value: 3, message: '4文字以上で入力してください。'}
+      maxLength: { value: 3, message: '4文字以上で入力してください。' }
     },
     score2: {
       min: 0,
       max: 10,
-      maxLength: { value: 3, message: '3文字以下で入力してください。'}
+      maxLength: { value: 3, message: '3文字以下で入力してください。' }
     },
     date: {}
   }
   // dataでアクセスできる
-  const onSubmit = (data: Inputs) => console.log(data);
-  const onClcikGet = () => console.log(getValues());
+  const onSubmit = (data: Inputs) => console.log(data)
+  const onClcikGet = () => console.log(getValues())
+  const onCheckDirty = () => {
+    // dirtyFieldsでコントロール下の変更要素がわかる
+    console.log(dirtyFields);
+  
+    // isDirtyでコントロール下の何かが変更
+    console.log(isDirty);
+  }
 
-  console.log("render")
   return (
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
@@ -99,43 +100,43 @@ const reactForm = () => {
         </Box>
         {/*スコア*/}
         <Box mt={2}>
-            <Controller
-              name="score"
-              control={control}
-              rules={validationRules.score}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  style={{ width: "150px"}}
-                  type="number"
-                  inputProps={{ min: 0, max: 20, step: '0.1' }}
-                  label="スコア"
-                  // !!falseyな値→false
-                  error={!!formErrors.score}
-                  helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
-                />
-              )}
-            />
+          <Controller
+            name="score"
+            control={control}
+            rules={validationRules.score}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                style={{ width: '150px' }}
+                type="number"
+                inputProps={{ min: 0, max: 20, step: '0.1' }}
+                label="スコア"
+                // !!falseyな値→false
+                error={!!formErrors.score}
+                helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
+              />
+            )}
+          />
         </Box>
         {/*スコア*/}
         <Box mt={2}>
-            <Controller
-              name="score2"
-              control={control}
-              rules={validationRules.score2}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  style={{ width: "150px"}}
-                  type="number"
-                  inputProps={{ min: 0, max: 20, step: '0.1' }}
-                  label="スコア2"
-                  // !!falseyな値→false
-                  error={fieldState.invalid}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
+          <Controller
+            name="score2"
+            control={control}
+            rules={validationRules.score2}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                style={{ width: '150px' }}
+                type="text"
+                inputProps={{ min: 0, max: 20, step: '0.1' }}
+                label="スコア2"
+                // !!falseyな値→false
+                error={fieldState.invalid}
+                helperText={fieldState.error?.message}
+              />
+            )}
+          />
         </Box>
         {/*公開日*/}
         {/*<Box mt={2}>
@@ -148,15 +149,24 @@ const reactForm = () => {
             )}
           />
         </Box>*/}
-        <Grid mt={2}>
-          <Button variant="contained" type="submit">
-            確定
-          </Button>
-        </Grid>
-        <Grid mt={2}>
-          <Button disabled={watch('title') !== "脆弱性"} variant="contained" onClick={onClcikGet}>
-            GET
-          </Button>
+        <Grid mt={2} container>
+          <Grid>
+            <Button variant="contained" type="submit">
+              確定
+            </Button>
+          </Grid>
+          <Grid ml={2}>
+            {/*タイトルが"脆弱性"だと押下できる*/}
+            <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
+              watch
+            </Button>
+          </Grid>
+          <Grid ml={2}>
+            {/*タイトルが"脆弱性"だと押下できる*/}
+            <Button variant="contained" onClick={onCheckDirty}>
+              isDirty
+            </Button>
+          </Grid>
         </Grid>
       </Box>
     </Stack>
