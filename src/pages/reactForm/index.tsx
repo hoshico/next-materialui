@@ -1,3 +1,4 @@
+import { InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -16,12 +17,14 @@ type Inputs = {
   score2: number
   date: Date | null
 }
+type InputsKeys = Array<keyof Inputs>;
 const reactForm = () => {
   const {
     getValues,
     watch,
     control,
     handleSubmit,
+    unregister,
     formState: { errors: formErrors, isDirty, dirtyFields }
   } = useForm<Inputs>({
     /* 
@@ -58,7 +61,12 @@ const reactForm = () => {
     date: {}
   }
   // dataでアクセスできる
-  const onSubmit = (data: Inputs) => console.log(data)
+  const onSubmit = (data: Inputs) => {
+    const key = Object.keys(getValues()) as InputsKeys;
+    //unregister(["title", "important", "score", "score2"], {keepDirty: false});
+    unregister(key, {keepDirty: false});
+  };
+
   const onClcikGet = () => console.log(getValues())
   const onCheckDirty = () => {
     // dirtyFieldsでコントロール下の変更要素がわかる
