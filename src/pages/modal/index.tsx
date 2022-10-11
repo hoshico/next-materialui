@@ -50,21 +50,21 @@ const Modal: NextPage = () => {
   */
   const user1 = {
     id: '',
-    email: 'seiichro.tanaka@example.com',
-    displayName: '田中 誠一郎',
+    email: 'tanaka@example.com',
+    displayName: '田中',
     roles: ['']
   }
   const user2 = {
     id: '',
-    email: 'toshi.katori@example.com',
-    displayName: '香取 闘志',
+    email: 'suzuki@example.com',
+    displayName: '鈴木',
     roles: ['']
   }
 
   const user3 = {
     id: '',
-    email: 'shintaro.kaneko@exapmle.com',
-    displayName: '金子 慎太郎',
+    email: 'yamada@exapmle.com',
+    displayName: '山田',
     roles: ['']
   }
   const userArry = [user1, user2, user3]
