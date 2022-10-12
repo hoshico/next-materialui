@@ -28,7 +28,7 @@ const Layout = ({ children }: any) => {
           </ListItem>
         </List>
       </Drawer>
-      {children}
+      <Box pt={10}>{children}</Box>
     </>
   )
 }
