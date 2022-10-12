@@ -8,7 +8,7 @@ import {
   Stack,
   TextField
 } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useFormState } from 'react-hook-form'
 
 type Inputs = {
   title: string
@@ -44,8 +44,8 @@ const reactForm = () => {
   */
   const validationRules = {
     title: {
-      required: '名前を入力してください',
-      minLength: { value: 4, message: '4文字以上で入力してください。' }
+      required: 'タイトルを入力してください',
+      minLength: { value: 3, message: '3文字以上で入力してください。' }
     },
     important: {},
     score: {
@@ -66,7 +66,6 @@ const reactForm = () => {
     //unregister(["title", "important", "score", "score2"], {keepDirty: false});
     unregister(key, {keepDirty: false});
   };
-
   const onClcikGet = () => console.log(getValues())
   const onCheckDirty = () => {
     // dirtyFieldsでコントロール下の変更要素がわかる
@@ -92,7 +91,7 @@ const reactForm = () => {
                 {...field}
                 type="text"
                 label="タイトル"
-                error={fieldState.invalid}
+                error={fieldState.isDirty && formState.errors}
                 helperText={fieldState.error?.message}
               />
             )}
@@ -112,7 +111,7 @@ const reactForm = () => {
             name="score"
             control={control}
             rules={validationRules.score}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 style={{ width: '150px' }}
@@ -120,7 +119,7 @@ const reactForm = () => {
                 inputProps={{ min: 0, max: 20, step: '0.1' }}
                 label="スコア"
                 // !!falseyな値→false
-                error={!!formErrors.score}
+                error={fieldState.isDirty}
                 helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
               />
             )}
