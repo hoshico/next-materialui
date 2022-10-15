@@ -8,7 +8,7 @@ import {
   Stack,
   TextField
 } from '@mui/material'
-import { Controller, useForm, useFormState } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
   title: string
@@ -25,7 +25,7 @@ const reactForm = () => {
     control,
     handleSubmit,
     unregister,
-    formState: { errors: formErrors, isDirty, dirtyFields }
+    formState: { errors: formErrors, isDirty, dirtyFields, isValid }
   } = useForm<Inputs>({
     /* 
       defaultValuesで初期値を設定
@@ -91,10 +91,11 @@ const reactForm = () => {
                 {...field}
                 type="text"
                 label="タイトル"
-                error={fieldState.isDirty && formState.errors}
+                inputProps={{required: "タイトルを入力"}}
+                error={fieldState.invalid}
                 helperText={fieldState.error?.message}
-              />
-            )}
+                />
+              )}
           />
         </Box>
         {/*重要性*/}
@@ -119,7 +120,7 @@ const reactForm = () => {
                 inputProps={{ min: 0, max: 20, step: '0.1' }}
                 label="スコア"
                 // !!falseyな値→false
-                error={fieldState.isDirty}
+                error={fieldState.invalid}
                 helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
               />
             )}
