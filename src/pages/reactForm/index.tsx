@@ -1,13 +1,5 @@
 import { InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Stack,
-  TextField
-} from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
@@ -17,7 +9,7 @@ type Inputs = {
   score2: number
   date: Date | null
 }
-type InputsKeys = Array<keyof Inputs>;
+type InputsKeys = Array<keyof Inputs>
 const reactForm = () => {
   const {
     getValues,
@@ -62,17 +54,17 @@ const reactForm = () => {
   }
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    const key = Object.keys(getValues()) as InputsKeys;
+    const key = Object.keys(getValues()) as InputsKeys
     //unregister(["title", "important", "score", "score2"], {keepDirty: false});
-    unregister(key, {keepDirty: false});
-  };
+    unregister(key, { keepDirty: false })
+  }
   const onClcikGet = () => console.log(getValues())
   const onCheckDirty = () => {
     // dirtyFieldsでコントロール下の変更要素がわかる
-    console.log(dirtyFields);
-  
+    console.log(dirtyFields)
+
     // isDirtyでコントロール下の何かが変更
-    console.log(isDirty);
+    console.log(isDirty)
   }
 
   return (
@@ -91,11 +83,11 @@ const reactForm = () => {
                 {...field}
                 type="text"
                 label="タイトル"
-                inputProps={{required: "タイトルを入力"}}
+                inputProps={{ required: 'タイトルを入力' }}
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message}
-                />
-              )}
+              />
+            )}
           />
         </Box>
         {/*重要性*/}
@@ -157,23 +149,33 @@ const reactForm = () => {
             )}
           />
         </Box>*/}
-        <Grid mt={2} container>
-          <Grid>
-            <Button variant="contained" type="submit">
-              確定
-            </Button>
+        <Grid mt={2}>
+          <Grid container>
+            <Grid>
+              <Button variant="contained" onClick={onCheckDirty}>
+                isDirty
+              </Button>
+            </Grid>
+            <Grid ml={2}>
+              {/*タイトルが"脆弱性"だと押下できる*/}
+              <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
+                watch
+              </Button>
+            </Grid>
           </Grid>
-          <Grid ml={2}>
-            {/*タイトルが"脆弱性"だと押下できる*/}
-            <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
-              watch
-            </Button>
-          </Grid>
-          <Grid ml={2}>
-            {/*タイトルが"脆弱性"だと押下できる*/}
-            <Button variant="contained" onClick={onCheckDirty}>
-              isDirty
-            </Button>
+          <Grid mt={2} container>
+            <Grid>
+              {/*タイトルが"脆弱性"だと押下できる*/}
+              <Button variant="contained" onClick={onCheckDirty}>
+                isDirty
+              </Button>
+            </Grid>
+            <Grid ml={2}>
+              {/*タイトルが"脆弱性"だと押下できる*/}
+              <Button variant="contained" type="submit">
+                確定
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
