@@ -19,6 +19,7 @@ const reactForm = () => {
     unregister,
     formState: { errors: formErrors, isDirty, dirtyFields, isValid }
   } = useForm<Inputs>({
+    mode: "onChange",
     /* 
       defaultValuesで初期値を設定
     */
