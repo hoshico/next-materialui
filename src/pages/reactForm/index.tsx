@@ -1,13 +1,14 @@
-import { InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
+import { ErrorSharp, InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
 import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string
-  important: boolean
-  score: number
-  score2: number
-  date: Date | null
+  title: string;
+  description: string;
+  important: boolean;
+  score: number;
+  score2: number;
+  date: Date | null;
 }
 type InputsKeys = Array<keyof Inputs>
 const reactForm = () => {
@@ -17,9 +18,9 @@ const reactForm = () => {
     control,
     handleSubmit,
     unregister,
-    formState: { errors: formErrors, isDirty, dirtyFields, isValid }
+    formState: { errors, isDirty, dirtyFields, isValid }
   } = useForm<Inputs>({
-    mode: "onChange",
+    mode: 'onChange',
     /* 
       defaultValuesで初期値を設定
     */
@@ -38,6 +39,10 @@ const reactForm = () => {
   const validationRules = {
     title: {
       required: 'タイトルを入力してください',
+      minLength: { value: 3, message: '3文字以上で入力してください。' }
+    },
+    description: {
+      required: '概要を入力してください',
       minLength: { value: 3, message: '3文字以上で入力してください。' }
     },
     important: {},
@@ -91,6 +96,26 @@ const reactForm = () => {
             )}
           />
         </Box>
+        {/*概要*/}
+        <Box mt={2}>
+          <Controller
+            // nameはInputsで定義されてるkeyに制限される
+            name="description"
+            control={control}
+            rules={validationRules.description}
+            render={({ field, fieldState }) => (
+              <TextField
+                //{...field}
+                type="text"
+                label="概要"
+                //inputProps={{ required: 'タイトルを入力' }}
+                //error={fieldState.invalid}
+                //helperText={fieldState.error?.message}
+                {...fieldState.error && <p>{fieldState.error.message}</p>}
+              />
+            )}
+          />
+        </Box>
         {/*重要性*/}
         <Box mt={2}>
           <Controller
@@ -113,8 +138,8 @@ const reactForm = () => {
                 inputProps={{ min: 0, max: 20, step: '0.1' }}
                 label="スコア"
                 // !!falseyな値→false
-                error={fieldState.invalid}
-                helperText={formErrors.score ? 'scoreは0.0~10.0の間の数値である必要があります。' : ''}
+                error={!!errors.score}
+                helperText={validationRules.score?.maxLength.message}
               />
             )}
           />
