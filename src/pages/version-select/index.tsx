@@ -11,7 +11,7 @@ type Inputs = {
   date: Date | null;
 }
 type InputsKeys = Array<keyof Inputs>
-const reactForm = () => {
+const versionSelect = () => {
   const {
     getValues,
     watch,
@@ -212,4 +212,4 @@ const reactForm = () => {
   )
 }
 
-export default reactForm
+export default versionSelect

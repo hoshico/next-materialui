@@ -3,13 +3,14 @@ import Box from '@mui/material/Box'
 import { Container } from '@mui/system'
 import { useMemo, useState } from 'react'
 
+
 const useMemoPage = () => {
   const [num, setNum] = useState(0)
   const [second, setSecond] = useState(2)
   const vul = useMemo(() => {
     setNum((pre) => pre + 1)
   },[second])
-
+  // セレクトタブを実装し、useMemodeで値を変える
   const onAddSecond = () => {
     setSecond((pre) => pre + 1);
   };
