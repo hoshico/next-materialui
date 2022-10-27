@@ -1,17 +1,65 @@
 import { ErrorSharp, InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
-import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from '@mui/material'
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
+import { useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string;
-  description: string;
-  important: boolean;
-  score: number;
-  score2: number;
-  date: Date | null;
+  title: string
+  description: string
+  important: boolean
+  score: number
+  score2: number
+  date: Date | null
 }
 type InputsKeys = Array<keyof Inputs>
 const versionSelect = () => {
+  const formContents = [
+    {
+      title: 'タイトルサンプル01',
+      important: false,
+      score: 0,
+      score2: 0,
+      date: new Date('2022-11-01')
+    },
+    {
+      title: 'タイトルサンプル02',
+      important: true,
+      score: 2,
+      score2: 2,
+      date: new Date('2022-11-02')
+    },
+    {
+      title: 'タイトルサンプル03',
+      important: true,
+      score: 3,
+      score2: 3,
+      date: new Date('2022-11-03')
+    }
+  ]
+  
+  const [version, setVersion] = useState("")
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setVersion(event.target.value)
+  }
+  const formContent = useMemo(() => {
+    return formContents[version]
+  }, [version])
+
   const {
     getValues,
     watch,
@@ -25,11 +73,11 @@ const versionSelect = () => {
       defaultValuesで初期値を設定
     */
     defaultValues: {
-      title: '脆弱性タイトル',
-      important: false,
-      score: 0,
-      score2: 0,
-      date: new Date()
+      title: formContent.title || '',
+      important: formContent.important || false,
+      score: formContent.score || 0,
+      score2: formContent.score2 || 0,
+      date: formContent.date || new Date()
     }
   })
   /*
@@ -80,6 +128,23 @@ const versionSelect = () => {
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
       <Box>
+        <Box mb={3}>
+          <Typography>現在のversion: {version}</Typography>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-standard-label">version</InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={version}
+              onChange={handleChange}
+              label="version"
+            >
+              <MenuItem value={0}>1.00</MenuItem>
+              <MenuItem value={1}>2.00</MenuItem>
+              <MenuItem value={2}>3.00</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
         {/*タイトル*/}
         <Box>
           <Controller
@@ -114,7 +179,7 @@ const versionSelect = () => {
                 //inputProps={{ required: 'タイトルを入力' }}
                 //error={fieldState.invalid}
                 //helperText={fieldState.error?.message}
-                {...fieldState.error && <p>{fieldState.error.message}</p>}
+                {...(fieldState.error && <p>{fieldState.error.message}</p>)}
               />
             )}
           />
