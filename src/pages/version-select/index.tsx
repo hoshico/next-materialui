@@ -50,15 +50,17 @@ const versionSelect = () => {
       date: new Date('2022-11-03')
     }
   ]
-  
+
   const [version, setVersion] = useState("")
 
   const handleChange = (event: SelectChangeEvent) => {
     setVersion(event.target.value)
   }
   const formContent = useMemo(() => {
-    return formContents[version]
-  }, [version])
+    const versionNum = Number(version);
+    return formContents[versionNum]
+  }, [version]);
+  console.log(formContent);
 
   const {
     getValues,
