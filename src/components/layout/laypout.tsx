@@ -23,7 +23,7 @@ const Layout = ({ children }: any) => {
         <List>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form" onClick={() => onChangePage('./reactForm')} />
+              <ListItemText primary="React-Hook-Form" onClick={() => onChangePage('./react-form')} />
             </ListItemButton>
           </ListItem>
         </List>
