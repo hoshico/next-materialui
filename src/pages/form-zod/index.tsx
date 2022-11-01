@@ -3,15 +3,15 @@ import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from 
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string
-  description: string
-  important: boolean
-  score: number
-  score2: number
-  date: Date | null
+  title: string;
+  description: string;
+  important: boolean;
+  score: number;
+  score2: number;
+  date: Date | null;
 }
 type InputsKeys = Array<keyof Inputs>
-const reactForm = () => {
+const FormZod = () => {
   const {
     getValues,
     watch,
@@ -25,7 +25,7 @@ const reactForm = () => {
       defaultValuesで初期値を設定
     */
     defaultValues: {
-      title: 'react-hook-form',
+      title: '脆弱性タイトル',
       important: false,
       score: 0,
       score2: 0,
@@ -60,7 +60,6 @@ const reactForm = () => {
   }
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    console.log(data);
     const key = Object.keys(getValues()) as InputsKeys
     //const arr = getValues();
     //type Arry = keyof typeof arr;
@@ -94,11 +93,11 @@ const reactForm = () => {
                 type="text"
                 label="タイトル"
                 inputProps={{ required: 'タイトルを入力' }}
+                error={fieldState.invalid}
                 helperText={fieldState.error?.message}
               />
             )}
           />
-          {errors.title?.message && <p>{errors.title?.message}</p>}
         </Box>
         {/*概要*/}
         <Box mt={2}>
@@ -115,7 +114,7 @@ const reactForm = () => {
                 //inputProps={{ required: 'タイトルを入力' }}
                 //error={fieldState.invalid}
                 //helperText={fieldState.error?.message}
-                //{...(fieldState.error && <p>{fieldState.error.message}</p>)}
+                {...fieldState.error && <p>{fieldState.error.message}</p>}
               />
             )}
           />
@@ -168,6 +167,17 @@ const reactForm = () => {
             )}
           />
         </Box>
+        {/*公開日*/}
+        {/*<Box mt={2}>
+          <Controller
+            name="date"
+            control={control}
+            rules={validationRules.date}
+            render={({ field, fieldState }) => (
+              
+            )}
+          />
+        </Box>*/}
         <Grid mt={2}>
           <Grid container>
             <Grid>
@@ -202,4 +212,4 @@ const reactForm = () => {
   )
 }
 
-export default reactForm
+export default FormZod
