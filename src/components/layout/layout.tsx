@@ -28,6 +28,11 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
+              <ListItemText primary="React-Hook-Form 別ver" onClick={() => onChangePage('./react-form2')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
             <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
             </ListItemButton>
           </ListItem>

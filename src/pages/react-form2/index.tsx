@@ -1,17 +1,30 @@
-import { ErrorSharp, InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
-import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  FormControlLabel,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string;
-  description: string;
-  important: boolean;
-  score: number;
-  score2: number;
-  date: Date | null;
+  title: string
+  title2: string
+  description: string
+  important: boolean
+  score: number
+  score2: number
+  date: Date | null
 }
 type InputsKeys = Array<keyof Inputs>
-const FormZod = () => {
+const reactForm2 = () => {
   const {
     getValues,
     watch,
@@ -26,6 +39,7 @@ const FormZod = () => {
     */
     defaultValues: {
       title: '',
+      title2: '',
       important: false,
       score: 0,
       score2: 0,
@@ -60,6 +74,7 @@ const FormZod = () => {
   }
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
+    console.log(data)
     const key = Object.keys(getValues()) as InputsKeys
     unregister(key, { keepDirty: false })
   }
@@ -77,8 +92,20 @@ const FormZod = () => {
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
       <Box>
         {/*タイトル*/}
-        <Typography variant='h4'>React-Hook-form & zod</Typography>
+        <Typography variant="h4">React-Hook-form</Typography>
+        <Box my={2}>
+          <Typography variant="subtitle1">バリデーション</Typography>
+        </Box>
+        <Divider />
         <Box mt={4}>
+          <Typography variant="h6">①入力フォーム</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography color="red" variant="subtitle2">
+            error & helperTextパターン
+          </Typography>
+        </Box>
+        <Box>
           <Controller
             // nameはInputsで定義されてるkeyに制限される
             name="title"
@@ -96,6 +123,26 @@ const FormZod = () => {
             )}
           />
         </Box>
+        <Box mt={4}>
+          <Typography variant="h6">②入力フォーム</Typography>
+        </Box>
+        <Box mt={2}>
+          <Typography color="red" variant="subtitle2">
+            error.○○.messageパターン
+          </Typography>
+        </Box>
+        <Box>
+          <Controller
+            // nameはInputsで定義されてるkeyに制限される
+            name="title2"
+            control={control}
+            rules={validationRules.title}
+            render={({ field, fieldState }) => (
+              <TextField {...field} type="text" label="タイトル" inputProps={{ required: 'タイトルを入力' }} />
+            )}
+          />
+          {errors.title2?.message && <Typography color="red">{errors.title2?.message}</Typography>}
+        </Box>
         {/*概要*/}
         <Box mt={2}>
           <Controller
@@ -111,7 +158,7 @@ const FormZod = () => {
                 //inputProps={{ required: 'タイトルを入力' }}
                 //error={fieldState.invalid}
                 //helperText={fieldState.error?.message}
-                {...fieldState.error && <p>{fieldState.error.message}</p>}
+                //{...(fieldState.error && <p>{fieldState.error.message}</p>)}
               />
             )}
           />
@@ -164,17 +211,6 @@ const FormZod = () => {
             )}
           />
         </Box>
-        {/*公開日*/}
-        {/*<Box mt={2}>
-          <Controller
-            name="date"
-            control={control}
-            rules={validationRules.date}
-            render={({ field, fieldState }) => (
-              
-            )}
-          />
-        </Box>*/}
         <Grid mt={2}>
           <Grid container>
             <Grid>
@@ -209,4 +245,4 @@ const FormZod = () => {
   )
 }
 
-export default FormZod
+export default reactForm2
