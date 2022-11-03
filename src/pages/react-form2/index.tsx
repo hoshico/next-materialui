@@ -27,7 +27,6 @@ type InputsKeys = Array<keyof Inputs>
 const reactForm2 = () => {
   const {
     getValues,
-    watch,
     control,
     handleSubmit,
     unregister,
@@ -55,15 +54,9 @@ const reactForm2 = () => {
       required: 'タイトルを入力してください',
       minLength: { value: 3, message: '3文字以上で入力してください。' }
     },
-    description: {
-      required: '概要を入力してください',
+    title2: {
+      required: 'タイトルを入力してください',
       minLength: { value: 3, message: '3文字以上で入力してください。' }
-    },
-    important: {},
-    score: {
-      min: 0,
-      max: 10,
-      maxLength: { value: 3, message: '4文字以上で入力してください。' }
     },
     score2: {
       min: 0,
@@ -78,14 +71,6 @@ const reactForm2 = () => {
     const key = Object.keys(getValues()) as InputsKeys
     unregister(key, { keepDirty: false })
   }
-  const onClcikGet = () => console.log(getValues())
-  const onCheckDirty = () => {
-    // dirtyFieldsでコントロール下の変更要素がわかる
-    console.log(dirtyFields)
-
-    // isDirtyでコントロール下の何かが変更
-    console.log(isDirty)
-  }
 
   return (
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -95,14 +80,17 @@ const reactForm2 = () => {
         <Typography variant="h4">React-Hook-form</Typography>
         <Box my={2}>
           <Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
+          <Typography variant="subtitle1">⑴ validationRulesを設定 → controller内にrulresとして設定</Typography>
+          <Typography variant="subtitle1">⑵ </Typography>
+          <Typography variant="subtitle1">⑶このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
         </Box>
         <Divider />
         <Box mt={4}>
           <Typography variant="h6">①TextField</Typography>
         </Box>
-        <Box mt={2}>
-          <Typography color="red" variant="subtitle2">
-            error & helperTextパターン
+        <Box my={2}>
+          <Typography variant="subtitle2">
+            ・error & helperTextパターン(非推奨)
           </Typography>
         </Box>
         <Box>
@@ -116,7 +104,6 @@ const reactForm2 = () => {
                 {...field}
                 type="text"
                 label="タイトル"
-                inputProps={{ required: 'タイトルを入力' }}
                 error={fieldState.invalid}
                 helperText={fieldState.error?.message}
               />
@@ -127,24 +114,23 @@ const reactForm2 = () => {
           <Typography variant="h6">②TextField</Typography>
         </Box>
         <Box mt={2}>
-          <Typography color="red" variant="subtitle2">
-            error.○○.messageパターン
+          <Typography variant="subtitle2">
+            ・error.○○.messageパターン
           </Typography>
         </Box>
         <Box>
           <Controller
-            // nameはInputsで定義されてるkeyに制限される
             name="title2"
             control={control}
-            rules={validationRules.title}
-            render={({ field, fieldState }) => (
-              <TextField {...field} type="text" label="タイトル" inputProps={{ required: 'タイトルを入力' }} />
+            rules={validationRules.title2}
+            render={({ field }) => (
+              <TextField {...field} error={Boolean(errors.title2?.message)} type="text" label="タイトル"/>
             )}
           />
-          {errors.title2?.message && <Typography color="red">{errors.title2?.message}</Typography>}
+          {errors.title2?.message && <Typography variant="subtitle2" color="red">{errors.title2?.message}</Typography>}
         </Box>
         {/*スコア*/}
-        <Box mt={2}>
+        {/*<Box mt={2}>
           <Controller
             name="score"
             control={control}
@@ -162,9 +148,9 @@ const reactForm2 = () => {
               />
             )}
           />
-        </Box>
+        </Box>*/}
         {/*スコア*/}
-        <Box mt={2}>
+        {/*<Box mt={2}>
           <Controller
             name="score2"
             control={control}
@@ -182,32 +168,12 @@ const reactForm2 = () => {
               />
             )}
           />
-        </Box>
+        </Box>*/}
         <Grid mt={2}>
           <Grid container>
             <Grid>
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
-            <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
-                watch
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid mt={2} container>
-            <Grid>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
-            <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button variant="contained" type="submit">
-                確定
+              <Button type="submit" color="secondary" variant="contained">
+                送信
               </Button>
             </Grid>
           </Grid>

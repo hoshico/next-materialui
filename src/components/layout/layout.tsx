@@ -12,7 +12,7 @@ const Layout = ({ children }: any) => {
   }
   return (
     <>
-      <AppBar component="nav">
+      <AppBar component="nav" color='secondary'>
         <Toolbar>
           <IconButton edge="start" onClick={() => setOpenDrawer(true)}>
             <DehazeIcon />
@@ -28,7 +28,7 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form 別ver" onClick={() => onChangePage('./react-form2')} />
+              <ListItemText primary="React-Hook-Form バリデーションについて" onClick={() => onChangePage('./react-form2')} />
             </ListItemButton>
           </ListItem>
           <ListItem>
