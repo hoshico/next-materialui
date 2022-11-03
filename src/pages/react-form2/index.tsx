@@ -1,13 +1,8 @@
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
-  FormControlLabel,
   Grid,
-  List,
-  ListItem,
-  ListItemText,
   Stack,
   TextField,
   Typography
@@ -30,7 +25,7 @@ const reactForm2 = () => {
     control,
     handleSubmit,
     unregister,
-    formState: { errors, isDirty, dirtyFields, isValid }
+    formState: { errors }
   } = useForm<Inputs>({
     mode: 'onChange',
     /* 
@@ -68,8 +63,6 @@ const reactForm2 = () => {
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
     console.log(data)
-    const key = Object.keys(getValues()) as InputsKeys
-    unregister(key, { keepDirty: false })
   }
 
   return (
@@ -89,9 +82,7 @@ const reactForm2 = () => {
           <Typography variant="h6">①TextField</Typography>
         </Box>
         <Box my={2}>
-          <Typography variant="subtitle2">
-            ・error & helperTextパターン(非推奨)
-          </Typography>
+          <Typography variant="subtitle2">・error & helperTextパターン(非推奨)</Typography>
         </Box>
         <Box>
           <Controller
@@ -114,9 +105,7 @@ const reactForm2 = () => {
           <Typography variant="h6">②TextField</Typography>
         </Box>
         <Box mt={2}>
-          <Typography variant="subtitle2">
-            ・error.○○.messageパターン
-          </Typography>
+          <Typography variant="subtitle2">・error.○○.messageパターン</Typography>
         </Box>
         <Box>
           <Controller
@@ -124,10 +113,14 @@ const reactForm2 = () => {
             control={control}
             rules={validationRules.title2}
             render={({ field }) => (
-              <TextField {...field} error={Boolean(errors.title2?.message)} type="text" label="タイトル"/>
+              <TextField {...field} error={Boolean(errors.title2?.message)} type="text" label="タイトル" />
             )}
           />
-          {errors.title2?.message && <Typography variant="subtitle2" color="red">{errors.title2?.message}</Typography>}
+          {errors.title2?.message && (
+            <Typography variant="subtitle2" color="red">
+              {errors.title2?.message}
+            </Typography>
+          )}
         </Box>
         {/*スコア*/}
         {/*<Box mt={2}>
