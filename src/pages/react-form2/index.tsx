@@ -73,9 +73,11 @@ const reactForm2 = () => {
         <Typography variant="h4">React-Hook-form</Typography>
         <Box my={2}>
           <Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
-          <Typography variant="subtitle1">⑴ validationRulesを設定 → controller内にrulresとして設定</Typography>
-          <Typography variant="subtitle1">⑵ </Typography>
-          <Typography variant="subtitle1">⑶このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
+          <Typography variant="subtitle1">⑴ validationRulesを設定(Controllerのnameで指定できる) </Typography>
+          <Typography variant="subtitle1">⑵ controller内にrulresとして設定(formStateのerrors検知できる)</Typography>
+          <Typography variant="subtitle1">⑶ TextField内のerrorにerrorsを使用(引っかかると枠の色が変わる。errorで⑵のerrorsを使用する。Booleanで使用する)</Typography>
+          <Typography variant="subtitle1">⑷ エラーメッセージのフラグとしてerrors使用(Controller下に記述)</Typography>
+          <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
         </Box>
         <Divider />
         <Box mt={4}>
