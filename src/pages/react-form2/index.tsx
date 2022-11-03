@@ -94,11 +94,11 @@ const reactForm2 = () => {
         {/*タイトル*/}
         <Typography variant="h4">React-Hook-form</Typography>
         <Box my={2}>
-          <Typography variant="subtitle1">バリデーション</Typography>
+          <Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
         </Box>
         <Divider />
         <Box mt={4}>
-          <Typography variant="h6">①入力フォーム</Typography>
+          <Typography variant="h6">①TextField</Typography>
         </Box>
         <Box mt={2}>
           <Typography color="red" variant="subtitle2">
@@ -124,7 +124,7 @@ const reactForm2 = () => {
           />
         </Box>
         <Box mt={4}>
-          <Typography variant="h6">②入力フォーム</Typography>
+          <Typography variant="h6">②TextField</Typography>
         </Box>
         <Box mt={2}>
           <Typography color="red" variant="subtitle2">
@@ -142,34 +142,6 @@ const reactForm2 = () => {
             )}
           />
           {errors.title2?.message && <Typography color="red">{errors.title2?.message}</Typography>}
-        </Box>
-        {/*概要*/}
-        <Box mt={2}>
-          <Controller
-            // nameはInputsで定義されてるkeyに制限される
-            name="description"
-            control={control}
-            rules={validationRules.description}
-            render={({ field, fieldState }) => (
-              <TextField
-                //{...field}
-                type="text"
-                label="概要"
-                //inputProps={{ required: 'タイトルを入力' }}
-                //error={fieldState.invalid}
-                //helperText={fieldState.error?.message}
-                //{...(fieldState.error && <p>{fieldState.error.message}</p>)}
-              />
-            )}
-          />
-        </Box>
-        {/*重要性*/}
-        <Box mt={2}>
-          <Controller
-            name="important"
-            render={({ field }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
-            control={control}
-          />
         </Box>
         {/*スコア*/}
         <Box mt={2}>
