@@ -1,5 +1,16 @@
 import DehazeIcon from '@mui/icons-material/Dehaze'
-import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar } from '@mui/material'
+import {
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography
+} from '@mui/material'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
@@ -12,11 +23,16 @@ const Layout = ({ children }: any) => {
   }
   return (
     <>
-      <AppBar component="nav" color='secondary'>
+      <AppBar component="nav" color="secondary">
         <Toolbar>
           <IconButton edge="start" onClick={() => setOpenDrawer(true)}>
             <DehazeIcon />
           </IconButton>
+          <Box ml={2}>
+            <Typography variant="h6" fontWeight="bold">
+              MUIコンポーネントテンプレート
+            </Typography>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" open={openDrawer} transitionDuration={100} onClose={() => setOpenDrawer(false)}>
@@ -28,22 +44,28 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form バリデーションについて" onClick={() => onChangePage('./react-form2')} />
+              <ListItemText
+                primary="React-Hook-Form バリデーションについて"
+                onClick={() => onChangePage('./react-form2')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-            <ListItemText primary="React-Hook-Form numberについて" onClick={() => onChangePage('./react-form-number')} />
+              <ListItemText
+                primary="React-Hook-Form numberについて"
+                onClick={() => onChangePage('./react-form-number')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-            <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
+              <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-            <ListItemText primary="アコーディオン" onClick={() => onChangePage('./accordion')} />
+              <ListItemText primary="アコーディオン" onClick={() => onChangePage('./accordion')} />
             </ListItemButton>
           </ListItem>
         </List>
