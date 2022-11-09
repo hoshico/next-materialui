@@ -7,6 +7,7 @@ import MuiAccordionSummary, {
 } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import { Container } from '@mui/material';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -53,7 +54,7 @@ export default function CustomizedAccordions() {
     };
 
   return (
-    <div>
+    <Container>
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         {/*一つのトグル*/}
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -85,6 +86,6 @@ export default function CustomizedAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-    </div>
+    </Container>
   );
 }
