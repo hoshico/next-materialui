@@ -1,41 +1,15 @@
-import { ErrorSharp, InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
-import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField, Typography } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
+import { Box, Button, Checkbox, Container, FormControlLabel, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
 type Inputs = {
-  title: string;
-  description: string;
-  important: boolean;
-  score: number;
-  score2: number;
-  date: Date | null;
+  email: string
+  name: string
+  password: string
 }
 type InputsKeys = Array<keyof Inputs>
 const FormZod = () => {
-  const {
-    getValues,
-    watch,
-    control,
-    handleSubmit,
-    unregister,
-    formState: { errors, isDirty, dirtyFields, isValid }
-  } = useForm<Inputs>({
-    mode: 'onChange',
-    /* 
-      defaultValuesで初期値を設定
-    */
-    defaultValues: {
-      title: '',
-      important: false,
-      score: 0,
-      score2: 0,
-      date: new Date()
-    }
-  })
-  /*
-    検証ルール
-    validationRulesで複数用意
-  */
+  const { register, handleSubmit } = useForm<Inputs>()
+  
   const validationRules = {
     title: {
       required: 'タイトルを入力してください',
@@ -58,154 +32,21 @@ const FormZod = () => {
     },
     date: {}
   }
-  // dataでアクセスできる
-  const onSubmit = (data: Inputs) => {
-    const key = Object.keys(getValues()) as InputsKeys
-    unregister(key, { keepDirty: false })
-  }
-  const onClcikGet = () => console.log(getValues())
-  const onCheckDirty = () => {
-    // dirtyFieldsでコントロール下の変更要素がわかる
-    console.log(dirtyFields)
-
-    // isDirtyでコントロール下の何かが変更
-    console.log(isDirty)
-  }
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data)
+  };
 
   return (
-    <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
-      {/*ControllerコンポーネントでReactHookFormを紐付け*/}
-      <Box>
-        {/*タイトル*/}
-        <Typography variant='h4'>React-Hook-form & zod</Typography>
-        <Box mt={4}>
-          <Controller
-            // nameはInputsで定義されてるkeyに制限される
-            name="title"
-            control={control}
-            rules={validationRules.title}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                type="text"
-                label="タイトル"
-                inputProps={{ required: 'タイトルを入力' }}
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-        </Box>
-        {/*概要*/}
-        <Box mt={2}>
-          <Controller
-            // nameはInputsで定義されてるkeyに制限される
-            name="description"
-            control={control}
-            rules={validationRules.description}
-            render={({ field, fieldState }) => (
-              <TextField
-                //{...field}
-                type="text"
-                label="概要"
-                //inputProps={{ required: 'タイトルを入力' }}
-                //error={fieldState.invalid}
-                //helperText={fieldState.error?.message}
-                {...fieldState.error && <p>{fieldState.error.message}</p>}
-              />
-            )}
-          />
-        </Box>
-        {/*重要性*/}
-        <Box mt={2}>
-          <Controller
-            name="important"
-            render={({ field }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
-            control={control}
-          />
-        </Box>
-        {/*スコア*/}
-        <Box mt={2}>
-          <Controller
-            name="score"
-            control={control}
-            rules={validationRules.score}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="number"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア"
-                // !!falseyな値→false
-                error={!!errors.score}
-                helperText={validationRules.score?.maxLength.message}
-              />
-            )}
-          />
-        </Box>
-        {/*スコア*/}
-        <Box mt={2}>
-          <Controller
-            name="score2"
-            control={control}
-            rules={validationRules.score2}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="text"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア2"
-                // !!falseyな値→false
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-        </Box>
-        {/*公開日*/}
-        {/*<Box mt={2}>
-          <Controller
-            name="date"
-            control={control}
-            rules={validationRules.date}
-            render={({ field, fieldState }) => (
-              
-            )}
-          />
-        </Box>*/}
-        <Grid mt={2}>
-          <Grid container>
-            <Grid>
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
-            <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
-                watch
-              </Button>
-            </Grid>
-          </Grid>
-          <Grid mt={2} container>
-            <Grid>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
-            <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button variant="contained" type="submit">
-                確定
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Box>
-    </Stack>
+    <Container maxWidth="sm" sx={{ pt: 5 }}>
+      <Stack spacing={3}>
+        <TextField required label="メールアドレス" type="email" {...register('email')}/>
+        <TextField required label="お名前" {...register('name')}/>
+        <TextField required label="パスワード" type="password" {...register('password')}/>
+        <Button color="primary" variant="contained" size="large" onClick={handleSubmit(onSubmit)}>
+          作成
+        </Button>
+      </Stack>
+    </Container>
   )
 }
 
