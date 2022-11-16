@@ -60,12 +60,22 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
+              <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
               <ListItemText primary="React-Hook-Form & yup" onClick={() => onChangePage('./form-yup')} />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
               <ListItemText primary="アコーディオン" onClick={() => onChangePage('./accordion')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemText primary="SWR" onClick={() => onChangePage('./swr')} />
             </ListItemButton>
           </ListItem>
         </List>
