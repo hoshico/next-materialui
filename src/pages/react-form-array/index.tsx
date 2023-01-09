@@ -1,13 +1,5 @@
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Stack,
-  TextField,
-  Typography
-} from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
+import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 
 type Inputs = {
   title: string
@@ -17,20 +9,22 @@ type Inputs = {
   score: number
   score2: number
   date: Date | null
+  categoryStatus: {
+    id: string
+    status: string
+  }[]
 }
 type InputsKeys = Array<keyof Inputs>
-const reactForm2 = () => {
+const id = "aaa"
+const id2 = "bbb"
+const reactFormArray = () => {
   const {
-    getValues,
     control,
+    register,
     handleSubmit,
-    unregister,
     formState: { errors }
   } = useForm<Inputs>({
     mode: 'onChange',
-    /* 
-      defaultValuesで初期値を設定
-    */
     defaultValues: {
       title: '',
       title2: '',
@@ -39,6 +33,10 @@ const reactForm2 = () => {
       score2: 0,
       date: new Date()
     }
+  })
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'categoryStatus'
   })
   /*
     検証ルール
@@ -71,13 +69,14 @@ const reactForm2 = () => {
       <Box>
         {/*タイトル*/}
         <Typography variant="h4">React-Hook-form</Typography>
+        <Typography variant="h4">useFieldArray</Typography>
         <Box my={2}>
-          <Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
+          {/*<Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
           <Typography variant="subtitle1">⑴ validationRulesを設定(Controllerのnameで指定できる) </Typography>
           <Typography variant="subtitle1">⑵ controller内にrulresとして設定(formStateのerrors検知できる)</Typography>
           <Typography variant="subtitle1">⑶ TextField内のerrorにerrorsを使用(引っかかると枠の色が変わる。errorで⑵のerrorsを使用する。Booleanで使用する)</Typography>
           <Typography variant="subtitle1">⑷ エラーメッセージのフラグとしてerrors使用(Controller下に記述)</Typography>
-          <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
+          <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>*/}
         </Box>
         <Divider />
         <Box mt={4}>
@@ -124,46 +123,23 @@ const reactForm2 = () => {
             </Typography>
           )}
         </Box>
-        {/*スコア*/}
-        {/*<Box mt={2}>
+        <Box mt={4}>
+          <Typography variant="h6">③fieldArray</Typography>
+        </Box>
+        <Box mt={2}>
           <Controller
-            name="score"
+            name={`categoryStatus.${id}`}
             control={control}
-            rules={validationRules.score}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="number"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア"
-                // !!falseyな値→false
-                error={!!errors.score}
-                helperText={validationRules.score?.maxLength.message}
-              />
-            )}
+            render={({ field }) => <TextField {...field} type="text" label="タイトル" />}
           />
-        </Box>*/}
-        {/*スコア*/}
-        {/*<Box mt={2}>
+        </Box>
+        <Box mt={2}>
           <Controller
-            name="score2"
+            name={`categoryStatus.${id2}`}
             control={control}
-            rules={validationRules.score2}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="text"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア2"
-                // !!falseyな値→false
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
+            render={({ field }) => <TextField {...field} type="text" label="タイトル" />}
           />
-        </Box>*/}
+        </Box>
         <Grid mt={2}>
           <Grid container>
             <Grid>
@@ -178,4 +154,4 @@ const reactForm2 = () => {
   )
 }
 
-export default reactForm2
+export default reactFormArray
