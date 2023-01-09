@@ -60,6 +60,11 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
+              <ListItemText primary="React-Hook-Form & useFieldArray" onClick={() => onChangePage('./react-form-array')} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
               <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
             </ListItemButton>
           </ListItem>
