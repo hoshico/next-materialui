@@ -1,4 +1,5 @@
 import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material'
+import { TextFieldcontrol } from 'components/form/TextfieldControl'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 
 type Inputs = {
@@ -12,7 +13,12 @@ type Inputs = {
 }
 type InputsKeys = Array<keyof Inputs>
 const reactForm2 = () => {
-  const useFormMethods = useForm()
+  const filed1 = "title"
+  const useFormMethods = useForm({
+    defaultValues: {
+      "title": ""
+    }
+  })
   const { setValue, handleSubmit } = useFormMethods
   //const {
   //  getValues,
@@ -76,50 +82,8 @@ const reactForm2 = () => {
           <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
         </Box>*/}
           <Divider />
-          <Box mt={4}>
-            <Typography variant="h6">①TextField</Typography>
-          </Box>
-          <Box my={2}>
-            <Typography variant="subtitle2">・error & helperTextパターン(非推奨)</Typography>
-          </Box>
-          <Box>
-            <Controller
-              // nameはInputsで定義されてるkeyに制限される
-              name="title"
-              control={control}
-              rules={validationRules.title}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  type="text"
-                  label="タイトル"
-                  error={fieldState.invalid}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
-          </Box>
-          <Box mt={4}>
-            <Typography variant="h6">②TextField</Typography>
-          </Box>
-          <Box mt={2}>
-            <Typography variant="subtitle2">・error.○○.messageパターン</Typography>
-          </Box>
-          <Box>
-            <Controller
-              name="title2"
-              control={control}
-              rules={validationRules.title2}
-              render={({ field }) => (
-                <TextField {...field} error={Boolean(errors.title2?.message)} type="text" label="タイトル" />
-              )}
-            />
-            {errors.title2?.message && (
-              <Typography variant="subtitle2" color="red">
-                {errors.title2?.message}
-              </Typography>
-            )}
-          </Box>
+          <TextFieldcontrol name="title" />
+
           {/*スコア*/}
           {/*<Box mt={2}>
           <Controller
