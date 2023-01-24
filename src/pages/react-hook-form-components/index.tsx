@@ -1,5 +1,13 @@
-import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material'
-import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
 
 type Inputs = {
   title: string
@@ -9,22 +17,20 @@ type Inputs = {
   score: number
   score2: number
   date: Date | null
-  categoryStatus: {
-    id: string
-    status: string
-  }[]
 }
 type InputsKeys = Array<keyof Inputs>
-const id = "aaa"
-const id2 = "bbb"
-const reactFormArray = () => {
+const reactForm2 = () => {
   const {
+    getValues,
     control,
-    register,
     handleSubmit,
+    unregister,
     formState: { errors }
   } = useForm<Inputs>({
     mode: 'onChange',
+    /* 
+      defaultValuesで初期値を設定
+    */
     defaultValues: {
       title: '',
       title2: '',
@@ -33,10 +39,6 @@ const reactFormArray = () => {
       score2: 0,
       date: new Date()
     }
-  })
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'categoryStatus'
   })
   /*
     検証ルール
@@ -69,14 +71,13 @@ const reactFormArray = () => {
       <Box>
         {/*タイトル*/}
         <Typography variant="h4">React-Hook-form</Typography>
-        <Typography variant="h4">useFieldArray</Typography>
         <Box my={2}>
-          {/*<Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
+          <Typography variant="subtitle1">【概要】バリデーションについて考える</Typography>
           <Typography variant="subtitle1">⑴ validationRulesを設定(Controllerのnameで指定できる) </Typography>
           <Typography variant="subtitle1">⑵ controller内にrulresとして設定(formStateのerrors検知できる)</Typography>
           <Typography variant="subtitle1">⑶ TextField内のerrorにerrorsを使用(引っかかると枠の色が変わる。errorで⑵のerrorsを使用する。Booleanで使用する)</Typography>
           <Typography variant="subtitle1">⑷ エラーメッセージのフラグとしてerrors使用(Controller下に記述)</Typography>
-          <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>*/}
+          <Typography variant="subtitle1">⑸ このバリデーションをクリアしていないと送信押下しても反応なし</Typography>
         </Box>
         <Divider />
         <Box mt={4}>
@@ -123,21 +124,44 @@ const reactFormArray = () => {
             </Typography>
           )}
         </Box>
-        <Box mt={4}>
-          <Typography variant="h6">③fieldArray</Typography>
-        </Box>
+        {/*スコア*/}
         {/*<Box mt={2}>
           <Controller
-            name={`categoryStatus.${id}`}
+            name="score"
             control={control}
-            render={({ field }) => <TextField {...field} type="text" label="タイトル" />}
+            rules={validationRules.score}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                style={{ width: '150px' }}
+                type="number"
+                inputProps={{ min: 0, max: 20, step: '0.1' }}
+                label="スコア"
+                // !!falseyな値→false
+                error={!!errors.score}
+                helperText={validationRules.score?.maxLength.message}
+              />
+            )}
           />
-        </Box>
-        <Box mt={2}>
+        </Box>*/}
+        {/*スコア*/}
+        {/*<Box mt={2}>
           <Controller
-            name={`categoryStatus.${id2}`}
+            name="score2"
             control={control}
-            render={({ field }) => <TextField {...field} type="text" label="タイトル" />}
+            rules={validationRules.score2}
+            render={({ field, fieldState }) => (
+              <TextField
+                {...field}
+                style={{ width: '150px' }}
+                type="text"
+                inputProps={{ min: 0, max: 20, step: '0.1' }}
+                label="スコア2"
+                // !!falseyな値→false
+                error={fieldState.invalid}
+                helperText={fieldState.error?.message}
+              />
+            )}
           />
         </Box>*/}
         <Grid mt={2}>
@@ -154,4 +178,4 @@ const reactFormArray = () => {
   )
 }
 
-export default reactFormArray
+export default reactForm2
