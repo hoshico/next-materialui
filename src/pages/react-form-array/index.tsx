@@ -15,8 +15,10 @@ type Inputs = {
   }[]
 }
 type InputsKeys = Array<keyof Inputs>
+
 const id = "aaa"
 const id2 = "bbb"
+
 const reactFormArray = () => {
   const {
     control,
