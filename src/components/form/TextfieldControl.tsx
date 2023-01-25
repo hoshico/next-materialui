@@ -1,8 +1,11 @@
-import { TextField } from '@mui/material'
-import { Controller, useFormContext } from 'react-hook-form'
+import { TextField } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 
 export const TextFieldcontrol = ({ name }: { name: string }) => {
-  const { control, formState } = useFormContext()
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext();
   return (
     <Controller
       name={name}
@@ -11,9 +14,8 @@ export const TextFieldcontrol = ({ name }: { name: string }) => {
       render={({ field }) => (
         <TextField
           {...field}
-          //error={}
         />
       )}
     ></Controller>
-  )
-}
+  );
+};
