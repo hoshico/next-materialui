@@ -16,7 +16,6 @@ const schema = z.object({
 
 type InputsKeys = Array<keyof Inputs>;
 const reactFormComponent = () => {
-  const filed1 = 'title';
   const useFormMethods = useForm({
     defaultValues: {
       title: ''
