@@ -20,13 +20,13 @@ const ParentChild = () => {
   const useFormMethods = useForm({
     defaultValues: {
       title: '',
-      description: "",
+      description: ''
     }
     //resolver: zodResolver(schema)
   });
 
   const {
-    handleSubmit,
+    handleSubmit
     //formState: { errors }
   } = useFormMethods;
 
@@ -70,15 +70,11 @@ const ParentChild = () => {
               )}
             />
           </Box>*/}
-        <Grid mt={2}>
-          <Grid container>
-            <Grid>
-              <Button type="submit" color="secondary" variant="contained">
-                送信
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Box mt={2}>
+          <Button type="submit" color="secondary" variant="contained">
+            送信
+          </Button>
+        </Box>
       </Stack>
     </FormProvider>
   );
