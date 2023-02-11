@@ -15,17 +15,19 @@ const schema = z.object({
 });
 
 type InputsKeys = Array<keyof Inputs>;
+
 const ParentChild = () => {
   const useFormMethods = useForm({
     defaultValues: {
-      title: ''
-    },
-    resolver: zodResolver(schema)
+      title: '',
+      description: "",
+    }
+    //resolver: zodResolver(schema)
   });
 
   const {
     handleSubmit,
-    formState: { errors }
+    //formState: { errors }
   } = useFormMethods;
 
   const onSubmit = (data: Inputs) => {
@@ -36,19 +38,20 @@ const ParentChild = () => {
     <FormProvider {...useFormMethods}>
       <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
         {/*ControllerコンポーネントでReactHookFormを紐付け*/}
-        <Box>
-          {/*タイトル*/}
-          <Typography variant="h6">React-Hook-form</Typography>
-          <Typography variant="subtitle1">親子関係のあるコンポーネントの実装</Typography>
-          <Divider />
-          <TextFieldcontrol name="title" />
-          {errors.title?.message && (
+
+        {/*タイトル*/}
+        {/*<Typography variant="h6">React-Hook-form</Typography>*/}
+        {/*<Typography variant="subtitle1">親子関係のあるコンポーネントの実装</Typography>
+          <Divider sx={{marginY: "10px"}}/>*/}
+        <TextFieldcontrol name="title" />
+        <TextFieldcontrol name="description" />
+        {/*{errors.title?.message && (
             <Typography variant="subtitle2" color="error">
               {errors.title?.message}
             </Typography>
-          )}
-          {/*スコア*/}
-          {/*<Box mt={2}>
+          )}*/}
+        {/*スコア*/}
+        {/*<Box mt={2}>
             <Controller
               name="score"
               control={control}
@@ -67,16 +70,15 @@ const ParentChild = () => {
               )}
             />
           </Box>*/}
-          <Grid mt={2}>
-            <Grid container>
-              <Grid>
-                <Button type="submit" color="secondary" variant="contained">
-                  送信
-                </Button>
-              </Grid>
+        <Grid mt={2}>
+          <Grid container>
+            <Grid>
+              <Button type="submit" color="secondary" variant="contained">
+                送信
+              </Button>
             </Grid>
           </Grid>
-        </Box>
+        </Grid>
       </Stack>
     </FormProvider>
   );
