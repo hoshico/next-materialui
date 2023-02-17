@@ -9,6 +9,7 @@ import {
   Container,
   FormLabel
 } from '@mui/material';
+import { useMemo } from 'react';
 import {
   Controller,
   useFieldArray,
@@ -21,6 +22,7 @@ interface Question {
 }
 
 export interface QuestionForm {
+  input: string;
   questions: Question[];
 }
 
@@ -30,23 +32,13 @@ interface Props {
   removeQuestion: (index: number) => void;
 }
 
-// 子コンポーネント
-const QuestionItem = ({ register, questionIndex, removeQuestion }: Props) => {
-  return (
-    <Box>
-      <FormLabel>{questionIndex + 1}</FormLabel>
-      <TextField {...register(`questions.${questionIndex}.questionText`)} />
-      <Button onClick={() => removeQuestion(questionIndex)}>削除</Button>
-    </Box>
-  );
-};
-
-const reactFormArray = () => {
-  const { control, register, handleSubmit } = useForm<QuestionForm>({
-    defaultValues: {
-      questions: [{ questionText: '' }]
-    }
-  });
+const reactFormArray2 = () => {
+  const { control, setValue, reset, getValues, register, handleSubmit } =
+    useForm<QuestionForm>({
+      defaultValues: {
+        questions: []
+      }
+    });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -54,15 +46,13 @@ const reactFormArray = () => {
   });
 
   const addQuestion = () => {
-    append({ questionText: '' });
-  };
-
-  const removeQuestion = (index: number) => {
-    remove(index);
+    append({ questionText: getValues().input });
+    setValue('input', '');
   };
 
   const onSubmit = (data: QuestionForm) => {
-    console.log('data情報: ', data);
+    // keyを削除する
+    console.log(data.questions.map((obj) => obj.questionText))
   };
 
   return (
@@ -71,13 +61,12 @@ const reactFormArray = () => {
         {/*タイトル*/}
         <Stack mt={6} spacing={2}>
           <Typography variant="h4">fieldArrayの使用方法</Typography>
+          <Box display="">
+            <TextField {...register('input')} />
+            <Button onClick={addQuestion}>追加</Button>
+          </Box>
           {fields.map((field, index) => (
-            <QuestionItem
-              key={field.id}
-              register={register}
-              questionIndex={index}
-              removeQuestion={removeQuestion}
-            />
+            <Typography key={field.id}>{field.questionText}</Typography>
           ))}
         </Stack>
         {/*質問追加ボタン*/}
@@ -95,4 +84,4 @@ const reactFormArray = () => {
   );
 };
 
-export default reactFormArray;
+export default reactFormArray2;
