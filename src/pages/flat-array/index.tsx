@@ -44,7 +44,8 @@ const flatArray = () => {
       defaultValues: {
         input_cwe: '',
         input_cweList: [],
-        cweList: []
+        cweList: [],
+        cveList: []
       }
     });
 
@@ -56,17 +57,14 @@ const flatArray = () => {
   };
 
   const cveListArray = useWatch({ name: 'cveList', control });
-  //const cveIndex = cveListArray.length;
+  const cveIndex = cveListArray.length;
   const onSubmit = (data: inputForm) => {
     const newCveList = {
       cve: data.input_cve,
       cweList: data.input_cweList,
     }
-    console.log(cveListArray)
-    //setValue(`cveList.${cveIndex}`, newCveList)
-    //console.log(data.input_cve ,data.input_cweList);
-    //setValue('cweList',[...getValues().cweList, data.input_cweList])
-    //console.log(data.questions.map((obj) => obj.questionText));
+    setValue(`cveList.${cveIndex}`, newCveList)
+    // input_cewe/input_cweList/cweList のリセット
   };
 
   return (
