@@ -30,13 +30,18 @@ const Dialog = () => {
       jvn: []
     }
   });
-  const { control, handleSubmit } = useFormMethods;
+  const { control, setValue, handleSubmit } = useFormMethods;
 
   const jvnArray = useWatch({
     control,
     name: 'jvn'
   });
-
+  const deleteJvn = (index: number) => {
+    const newJvnArray = jvnArray.filter(
+      (jvn: string, i: number) => i !== index
+    );
+    setValue('jvn', newJvnArray);
+  };
   const onsubmit = (data: Input) => {
     console.log(data);
   };
@@ -59,18 +64,22 @@ const Dialog = () => {
             </Box>
           </Box>
           <Box>
-            {jvnArray && jvnArray.map((jvn: string, index: number) => (
-              <Typography key={index}>{jvn}</Typography>
-            ))}
+            {jvnArray &&
+              jvnArray.map((jvn: string, index: number) => (
+                <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography>{jvn}</Typography>
+                  <Button onClick={() => deleteJvn(index)}>削除</Button>
+                </Box>
+              ))}
           </Box>
         </Box>
         <JvnDialog
-          name="_inputJvn"
+          name="input_jvn"
           index={jvnArray?.length || 0}
           open={open}
           closeDialog={closeDialog}
         />
-        <Button type='submit'>チェック</Button>
+        <Button type="submit">チェック</Button>
       </Stack>
     </FormProvider>
   );
