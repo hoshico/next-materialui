@@ -22,7 +22,7 @@ const snackbarStateAtom = atom<SnackbarState>({
 export const useSnackbar = () => {
   const setSnackbarState = useSetRecoilState(snackbarStateAtom);
 
-  const opensnackbar = ({ text, severity }: SnackbarParams) => {
+  const openSnackbar = ({ text, severity }: SnackbarParams) => {
     setSnackbarState({
       isOpen: true,
       text,
@@ -37,7 +37,7 @@ export const useSnackbar = () => {
       severity: 'info'
     });
   };
-  return { opensnackbar, closeSnackbar };
+  return { openSnackbar, closeSnackbar };
 };
 
 export const useCustomSnackbar = () => {

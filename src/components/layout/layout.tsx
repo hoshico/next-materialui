@@ -1,5 +1,6 @@
-import DehazeIcon from '@mui/icons-material/Dehaze'
+import DehazeIcon from '@mui/icons-material/Dehaze';
 import {
+  Alert,
   AppBar,
   Box,
   Drawer,
@@ -8,19 +9,24 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Snackbar,
   Toolbar,
   Typography
-} from '@mui/material'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
+} from '@mui/material';
+import { useCustomSnackbar, useSnackbar } from 'components/snackbar/hooks';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const Layout = ({ children }: any) => {
-  const router = useRouter()
-  const [openDrawer, setOpenDrawer] = useState(false)
+  const router = useRouter();
+  const [openDrawer, setOpenDrawer] = useState(false);
   const onChangePage = (path: string) => {
-    router.push(path)
-    setOpenDrawer(false)
-  }
+    router.push(path);
+    setOpenDrawer(false);
+  };
+  const { snackbarState } = useCustomSnackbar();
+  const { closeSnackbar } = useSnackbar();
+
   return (
     <>
       <AppBar component="nav" color="secondary">
@@ -35,11 +41,19 @@ const Layout = ({ children }: any) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Drawer anchor="left" open={openDrawer} transitionDuration={100} onClose={() => setOpenDrawer(false)}>
+      <Drawer
+        anchor="left"
+        open={openDrawer}
+        transitionDuration={100}
+        onClose={() => setOpenDrawer(false)}
+      >
         <List>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form" onClick={() => onChangePage('./react-form')} />
+              <ListItemText
+                primary="React-Hook-Form"
+                onClick={() => onChangePage('./react-form')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
@@ -60,33 +74,60 @@ const Layout = ({ children }: any) => {
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form & useFieldArray" onClick={() => onChangePage('./react-form-array')} />
+              <ListItemText
+                primary="React-Hook-Form & useFieldArray"
+                onClick={() => onChangePage('./react-form-array')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form & zod" onClick={() => onChangePage('./form-zod')} />
+              <ListItemText
+                primary="React-Hook-Form & zod"
+                onClick={() => onChangePage('./form-zod')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="React-Hook-Form & yup" onClick={() => onChangePage('./form-yup')} />
+              <ListItemText
+                primary="React-Hook-Form & yup"
+                onClick={() => onChangePage('./form-yup')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="アコーディオン" onClick={() => onChangePage('./accordion')} />
+              <ListItemText
+                primary="アコーディオン"
+                onClick={() => onChangePage('./accordion')}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton>
-              <ListItemText primary="SWR" onClick={() => onChangePage('./swr')} />
+              <ListItemText
+                primary="SWR"
+                onClick={() => onChangePage('./swr')}
+              />
             </ListItemButton>
           </ListItem>
         </List>
       </Drawer>
+      {/*通知バー*/}
+      <Snackbar
+        open={snackbarState.isOpen}
+        autoHideDuration={6000}
+        onClose={closeSnackbar}
+      >
+        <Alert
+          onClose={closeSnackbar}
+          severity={snackbarState.severity}
+          sx={{ width: '100%' }}
+        />
+      </Snackbar>
       <Box pt={10}>{children}</Box>
     </>
-  )
-}
-export default Layout
+  );
+};
+export default Layout;

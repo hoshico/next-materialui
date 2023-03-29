@@ -1,16 +1,32 @@
-import { ErrorSharp, InputSharp, ResetTv, Score, SettingsOverscanOutlined } from '@mui/icons-material'
-import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from '@mui/material'
-import { Controller, useForm } from 'react-hook-form'
+import {
+  ErrorSharp,
+  InputSharp,
+  ResetTv,
+  Score,
+  SettingsOverscanOutlined
+} from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Stack,
+  TextField
+} from '@mui/material';
+import { useSnackbar } from 'components/snackbar/hooks';
+import { Controller, useForm } from 'react-hook-form';
 
 type Inputs = {
-  title: string
-  description: string
-  important: boolean
-  score: number
-  score2: number
-  date: Date | null
-}
-type InputsKeys = Array<keyof Inputs>
+  title: string;
+  description: string;
+  important: boolean;
+  score: number;
+  score2: number;
+  date: Date | null;
+};
+type InputsKeys = Array<keyof Inputs>;
+
 const reactForm = () => {
   const {
     getValues,
@@ -31,7 +47,7 @@ const reactForm = () => {
       score2: 0,
       date: new Date()
     }
-  })
+  });
   /*
     検証ルール
     validationRulesで複数用意
@@ -57,25 +73,25 @@ const reactForm = () => {
       maxLength: { value: 3, message: '3文字以下で入力してください。' }
     },
     date: {}
-  }
+  };
+
+  const { openSnackbar, closeSnackbar } = useSnackbar();
+
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    console.log(data);
-    const key = Object.keys(getValues()) as InputsKeys
-    //const arr = getValues();
-    //type Arry = keyof typeof arr;
-    //const key = Object.keys(getValues())
-    //unregister(["title", "important", "score", "score2"], {keepDirty: false});
-    unregister(key, { keepDirty: false })
-  }
-  const onClcikGet = () => console.log(getValues())
+    openSnackbar('送信しました', 'success');
+
+    const key = Object.keys(getValues()) as InputsKeys;
+    unregister(key, { keepDirty: false });
+  };
+  const onClcikGet = () => console.log(getValues());
   const onCheckDirty = () => {
     // dirtyFieldsでコントロール下の変更要素がわかる
-    console.log(dirtyFields)
+    console.log(dirtyFields);
 
     // isDirtyでコントロール下の何かが変更
-    console.log(isDirty)
-  }
+    console.log(isDirty);
+  };
 
   return (
     <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -124,7 +140,13 @@ const reactForm = () => {
         <Box mt={2}>
           <Controller
             name="important"
-            render={({ field }) => <FormControlLabel label="重要性" {...field} control={<Checkbox />} />}
+            render={({ field }) => (
+              <FormControlLabel
+                label="重要性"
+                {...field}
+                control={<Checkbox />}
+              />
+            )}
             control={control}
           />
         </Box>
@@ -177,7 +199,11 @@ const reactForm = () => {
             </Grid>
             <Grid ml={2}>
               {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button disabled={watch('title') !== '脆弱性'} variant="contained" onClick={onClcikGet}>
+              <Button
+                disabled={watch('title') !== '脆弱性'}
+                variant="contained"
+                onClick={onClcikGet}
+              >
                 watch
               </Button>
             </Grid>
@@ -199,7 +225,7 @@ const reactForm = () => {
         </Grid>
       </Box>
     </Stack>
-  )
-}
+  );
+};
 
-export default reactForm
+export default reactForm;
