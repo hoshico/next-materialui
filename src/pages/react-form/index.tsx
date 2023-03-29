@@ -62,16 +62,16 @@ const reactForm = () => {
       minLength: { value: 3, message: '3文字以上で入力してください。' }
     },
     important: {},
-    score: {
-      min: 0,
-      max: 10,
-      maxLength: { value: 3, message: '4文字以上で入力してください。' }
-    },
-    score2: {
-      min: 0,
-      max: 10,
-      maxLength: { value: 3, message: '3文字以下で入力してください。' }
-    },
+    //score: {
+    //  min: 0,
+    //  max: 10,
+    //  maxLength: { value: 3, message: '4文字以上で入力してください。' }
+    //},
+    //score2: {
+    //  min: 0,
+    //  max: 10,
+    //  maxLength: { value: 3, message: '3文字以下で入力してください。' }
+    //},
     date: {}
   };
 
@@ -79,13 +79,18 @@ const reactForm = () => {
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    openSnackbar('送信しました', 'success');
-
-    const key = Object.keys(getValues()) as InputsKeys;
-    unregister(key, { keepDirty: false });
+    console.log("hihi")
+    console.log(data);
+    openSnackbar({ text: '送信しました', severity: 'success' });
+//
+//    const key = Object.keys(getValues()) as InputsKeys;
+//    unregister(key, { keepDirty: false });
   };
-  const onClcikGet = () => console.log(getValues());
+  const onClcikGet = () => {
+    
+    console.log(getValues())};
   const onCheckDirty = () => {
+    openSnackbar({ text: '送信しました', severity: 'success' });
     // dirtyFieldsでコントロール下の変更要素がわかる
     console.log(dirtyFields);
 
@@ -155,7 +160,7 @@ const reactForm = () => {
           <Controller
             name="score"
             control={control}
-            rules={validationRules.score}
+            //rules={validationRules.score}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -165,7 +170,7 @@ const reactForm = () => {
                 label="スコア"
                 // !!falseyな値→false
                 error={!!errors.score}
-                helperText={validationRules.score?.maxLength.message}
+                //helperText={validationRules.score?.maxLength.message}
               />
             )}
           />
@@ -175,7 +180,7 @@ const reactForm = () => {
           <Controller
             name="score2"
             control={control}
-            rules={validationRules.score2}
+            //rules={validationRules.score2}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -216,7 +221,6 @@ const reactForm = () => {
               </Button>
             </Grid>
             <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
               <Button variant="contained" type="submit">
                 確定
               </Button>

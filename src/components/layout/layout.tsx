@@ -27,6 +27,8 @@ const Layout = ({ children }: any) => {
   const { snackbarState } = useCustomSnackbar();
   const { closeSnackbar } = useSnackbar();
 
+  console.log(snackbarState.isOpen)
+
   return (
     <>
       <AppBar component="nav" color="secondary">
@@ -115,6 +117,7 @@ const Layout = ({ children }: any) => {
         </List>
       </Drawer>
       {/*通知バー*/}
+      <Box pt={10}>{children}</Box>
       <Snackbar
         open={snackbarState.isOpen}
         autoHideDuration={6000}
@@ -126,7 +129,6 @@ const Layout = ({ children }: any) => {
           sx={{ width: '100%' }}
         />
       </Snackbar>
-      <Box pt={10}>{children}</Box>
     </>
   );
 };
