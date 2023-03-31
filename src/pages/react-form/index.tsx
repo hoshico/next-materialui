@@ -52,50 +52,14 @@ const reactForm = () => {
     検証ルール
     validationRulesで複数用意
   */
-  const validationRules = {
-    title: {
-      required: 'タイトルを入力してください',
-      minLength: { value: 3, message: '3文字以上で入力してください。' }
-    },
-    description: {
-      required: '概要を入力してください',
-      minLength: { value: 3, message: '3文字以上で入力してください。' }
-    },
-    important: {},
-    //score: {
-    //  min: 0,
-    //  max: 10,
-    //  maxLength: { value: 3, message: '4文字以上で入力してください。' }
-    //},
-    //score2: {
-    //  min: 0,
-    //  max: 10,
-    //  maxLength: { value: 3, message: '3文字以下で入力してください。' }
-    //},
-    date: {}
-  };
 
   const { openSnackbar, closeSnackbar } = useSnackbar();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    console.log("hihi")
+    console.log('hihi');
     console.log(data);
     openSnackbar({ text: '送信しました', severity: 'success' });
-//
-//    const key = Object.keys(getValues()) as InputsKeys;
-//    unregister(key, { keepDirty: false });
-  };
-  const onClcikGet = () => {
-    
-    console.log(getValues())};
-  const onCheckDirty = () => {
-    openSnackbar({ text: '送信しました', severity: 'success' });
-    // dirtyFieldsでコントロール下の変更要素がわかる
-    console.log(dirtyFields);
-
-    // isDirtyでコントロール下の何かが変更
-    console.log(isDirty);
   };
 
   return (
@@ -108,7 +72,7 @@ const reactForm = () => {
             // nameはInputsで定義されてるkeyに制限される
             name="title"
             control={control}
-            rules={validationRules.title}
+            //rules={validationRules.title}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -127,7 +91,7 @@ const reactForm = () => {
             // nameはInputsで定義されてるkeyに制限される
             name="description"
             control={control}
-            rules={validationRules.description}
+            //rules={validationRules.description}
             render={({ field, fieldState }) => (
               <TextField
                 //{...field}
@@ -196,32 +160,9 @@ const reactForm = () => {
           />
         </Box>
         <Grid mt={2}>
-          <Grid container>
-            <Grid>
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
-            <Grid ml={2}>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button
-                disabled={watch('title') !== '脆弱性'}
-                variant="contained"
-                onClick={onClcikGet}
-              >
-                watch
-              </Button>
-            </Grid>
-          </Grid>
           <Grid mt={2} container>
-            <Grid>
-              {/*タイトルが"脆弱性"だと押下できる*/}
-              <Button variant="contained" onClick={onCheckDirty}>
-                isDirty
-              </Button>
-            </Grid>
             <Grid ml={2}>
-              <Button variant="contained" type="submit">
+              <Button type="submit" variant="contained">
                 確定
               </Button>
             </Grid>
