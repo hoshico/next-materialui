@@ -35,11 +35,12 @@ const reactForm = () => {
     }
   });
 
+  const selectFile = () => {};
+
   const { openSnackbar, closeSnackbar } = useSnackbar();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    console.log('hihi');
     console.log(data);
     openSnackbar({ text: '送信しました', severity: 'success' });
   };
@@ -49,73 +50,77 @@ const reactForm = () => {
       {/*ControllerコンポーネントでReactHookFormを紐付け*/}
       <Box>
         {/*タイトル*/}
-        <Box>
-          <Controller
-            name="title"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                type="text"
-                label="タイトル"
-                inputProps={{ required: 'タイトルを入力' }}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
+        <Grid container direction="column" gap={2}>
+          <Grid item>
+            <label htmlFor="title">テキスト入力</label>
+          </Grid>
+          <Grid item>
+            <Controller
+              name="title"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  id="title"
+                  {...field}
+                  type="text"
+                  label="タイトル"
+                  inputProps={{ required: 'タイトルを入力' }}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+          </Grid>
           {errors.title?.message && <p>{errors.title?.message}</p>}
-        </Box>
-        {/*概要*/}
-        <Box mt={2}>
-          <Controller
-            name="description"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                //{...field}
-                type="text"
-                label="概要"
-                //inputProps={{ required: 'タイトルを入力' }}
-                //error={fieldState.invalid}
-                //helperText={fieldState.error?.message}
-                //{...(fieldState.error && <p>{fieldState.error.message}</p>)}
-              />
-            )}
-          />
-        </Box>
-        {/*重要性*/}
-        <Box mt={2}>
-          <Controller
-            name="important"
-            render={({ field }) => (
-              <FormControlLabel
-                label="重要性"
-                {...field}
-                control={<Checkbox />}
-              />
-            )}
-            control={control}
-          />
-        </Box>
+        </Grid>
         {/*スコア*/}
-        <Box mt={2}>
-          <Controller
-            name="score"
-            control={control}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="number"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア"
-                // !!falseyな値→false
-                //error={!!errors.score}
-              />
-            )}
-          />
-        </Box>
-       
+        <Grid container direction="column" gap={2} mt={4}>
+          <Grid item>
+            <label htmlFor="score">数値入力</label>
+          </Grid>
+          <Grid>
+            <Controller
+              name="score"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  id="score"
+                  {...field}
+                  style={{ width: '150px' }}
+                  type="number"
+                  inputProps={{ min: 0, max: 20, step: '0.1' }}
+                  label="スコア"
+                />
+              )}
+            />
+          </Grid>
+        </Grid>
+        {/*重要性*/}
+        <Grid container direction="column" gap={2} mt={4}>
+          <Grid item>
+            <label htmlFor="important">チェックボックス</label>
+          </Grid>
+          <Grid>
+            <Controller
+              name="important"
+              render={({ field }) => (
+                <FormControlLabel
+                  id="important"
+                  label="重要性"
+                  {...field}
+                  control={<Checkbox />}
+                />
+              )}
+              control={control}
+            />
+          </Grid>
+        </Grid>
+        {/*ファイル登録*/}
+        <Grid>
+          <Box hidden>
+            <input type="file" accept=".png" />
+          </Box>
+          <Button onClick={selectFile}>ファイル登録</Button>
+        </Grid>
         <Grid mt={2}>
           <Grid mt={2} container>
             <Grid ml={2}>

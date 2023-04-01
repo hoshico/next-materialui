@@ -27,8 +27,6 @@ const Layout = ({ children }: any) => {
   const { snackbarState } = useCustomSnackbar();
   const { closeSnackbar } = useSnackbar();
 
-  console.log(snackbarState.isOpen)
-
   return (
     <>
       <AppBar component="nav" color="primary">
@@ -127,7 +125,9 @@ const Layout = ({ children }: any) => {
           onClose={closeSnackbar}
           severity={snackbarState.severity}
           sx={{ width: '100%' }}
-        />
+        >
+          {snackbarState.text}
+        </Alert>
       </Snackbar>
     </>
   );
