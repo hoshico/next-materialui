@@ -8,7 +8,7 @@ import {
   TextField
 } from '@mui/material';
 import { useSnackbar } from 'components/snackbar/hooks';
-import { useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type Inputs = {
@@ -20,7 +20,15 @@ type Inputs = {
 };
 
 const reactForm = () => {
+  // ファイル関連
   const [file, setFile] = useState<File | null>(null);
+  const filePickerRef = useRef<HTMLInputElement>(null);
+  const showFolder = () => {
+    if (filePickerRef.current) {
+      filePickerRef.current.click();
+    }
+  };
+
   const {
     control,
     handleSubmit,
@@ -37,14 +45,20 @@ const reactForm = () => {
     }
   });
 
-  console.log("ファイル情報: ",file);
-  const selectFile = () => {};
+  console.log('ファイル情報: ', file);
+  const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length !== 0) {
+      setFile(files[0]);
+    }
+    e.target.value = '';
+  };
 
   const { openSnackbar, closeSnackbar } = useSnackbar();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
-    console.log("ファイル情報: ",file);
+    console.log('ファイル情報: ', file);
     console.log(data);
     openSnackbar({ text: '送信しました', severity: 'success' });
   };
@@ -121,9 +135,15 @@ const reactForm = () => {
         {/*ファイル登録*/}
         <Grid>
           <Box hidden>
-            <input type="file" accept=".png" onChange={(e: any) => setFile(e)} />
+            <input
+              type="file"
+              accept=".png, .jpeg, .jpg "
+              ref={filePickerRef}
+              onChange={(e) => selectFile(e)}
+              style={{ display: 'none' }}
+            />
           </Box>
-          <Button onClick={selectFile}>ファイル登録</Button>
+          <Button onClick={showFolder}>ファイル登録</Button>
         </Grid>
         <Grid mt={2}>
           <Grid mt={2} container>
