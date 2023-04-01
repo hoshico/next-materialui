@@ -25,18 +25,13 @@ type Inputs = {
   score2: number;
   date: Date | null;
 };
-type InputsKeys = Array<keyof Inputs>;
 
 const reactForm = () => {
   const {
-    getValues,
-    watch,
     control,
     handleSubmit,
-    unregister,
     formState: { errors, isDirty, dirtyFields, isValid }
   } = useForm<Inputs>({
-    mode: 'onChange',
     /* 
       defaultValuesで初期値を設定
     */
@@ -48,10 +43,6 @@ const reactForm = () => {
       date: new Date()
     }
   });
-  /*
-    検証ルール
-    validationRulesで複数用意
-  */
 
   const { openSnackbar, closeSnackbar } = useSnackbar();
 
@@ -69,10 +60,8 @@ const reactForm = () => {
         {/*タイトル*/}
         <Box>
           <Controller
-            // nameはInputsで定義されてるkeyに制限される
             name="title"
             control={control}
-            //rules={validationRules.title}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -88,10 +77,8 @@ const reactForm = () => {
         {/*概要*/}
         <Box mt={2}>
           <Controller
-            // nameはInputsで定義されてるkeyに制限される
             name="description"
             control={control}
-            //rules={validationRules.description}
             render={({ field, fieldState }) => (
               <TextField
                 //{...field}
@@ -124,7 +111,6 @@ const reactForm = () => {
           <Controller
             name="score"
             control={control}
-            //rules={validationRules.score}
             render={({ field, fieldState }) => (
               <TextField
                 {...field}
@@ -133,8 +119,7 @@ const reactForm = () => {
                 inputProps={{ min: 0, max: 20, step: '0.1' }}
                 label="スコア"
                 // !!falseyな値→false
-                error={!!errors.score}
-                //helperText={validationRules.score?.maxLength.message}
+                //error={!!errors.score}
               />
             )}
           />
