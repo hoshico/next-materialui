@@ -8,6 +8,7 @@ import {
   TextField
 } from '@mui/material';
 import { useSnackbar } from 'components/snackbar/hooks';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type Inputs = {
@@ -19,6 +20,7 @@ type Inputs = {
 };
 
 const reactForm = () => {
+  const [file, setFile] = useState<File | null>(null);
   const {
     control,
     handleSubmit,
@@ -35,12 +37,14 @@ const reactForm = () => {
     }
   });
 
+  console.log("ファイル情報: ",file);
   const selectFile = () => {};
 
   const { openSnackbar, closeSnackbar } = useSnackbar();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
+    console.log("ファイル情報: ",file);
     console.log(data);
     openSnackbar({ text: '送信しました', severity: 'success' });
   };
@@ -117,7 +121,7 @@ const reactForm = () => {
         {/*ファイル登録*/}
         <Grid>
           <Box hidden>
-            <input type="file" accept=".png" />
+            <input type="file" accept=".png" onChange={(e: any) => setFile(e)} />
           </Box>
           <Button onClick={selectFile}>ファイル登録</Button>
         </Grid>
