@@ -31,7 +31,7 @@ const Layout = ({ children }: any) => {
 
   return (
     <>
-      <AppBar component="nav" color="secondary">
+      <AppBar component="nav" color="primary">
         <Toolbar>
           <IconButton edge="start" onClick={() => setOpenDrawer(true)}>
             <DehazeIcon />

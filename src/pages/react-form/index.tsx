@@ -1,11 +1,4 @@
 import {
-  ErrorSharp,
-  InputSharp,
-  ResetTv,
-  Score,
-  SettingsOverscanOutlined
-} from '@mui/icons-material';
-import {
   Box,
   Button,
   Checkbox,
@@ -22,7 +15,6 @@ type Inputs = {
   description: string;
   important: boolean;
   score: number;
-  score2: number;
   date: Date | null;
 };
 
@@ -36,10 +28,9 @@ const reactForm = () => {
       defaultValuesで初期値を設定
     */
     defaultValues: {
-      title: 'react-hook-form',
+      title: '',
       important: false,
       score: 0,
-      score2: 0,
       date: new Date()
     }
   });
@@ -124,26 +115,7 @@ const reactForm = () => {
             )}
           />
         </Box>
-        {/*スコア*/}
-        <Box mt={2}>
-          <Controller
-            name="score2"
-            control={control}
-            //rules={validationRules.score2}
-            render={({ field, fieldState }) => (
-              <TextField
-                {...field}
-                style={{ width: '150px' }}
-                type="text"
-                inputProps={{ min: 0, max: 20, step: '0.1' }}
-                label="スコア2"
-                // !!falseyな値→false
-                error={fieldState.invalid}
-                helperText={fieldState.error?.message}
-              />
-            )}
-          />
-        </Box>
+       
         <Grid mt={2}>
           <Grid mt={2} container>
             <Grid ml={2}>
