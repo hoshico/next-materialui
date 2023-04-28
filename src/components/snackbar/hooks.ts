@@ -10,7 +10,7 @@ type SnackbarState = {
 
 type SnackbarParams = Pick<SnackbarState, 'text' | 'severity'>;
 
-const snackbarStateAtom = atom<SnackbarState>({
+export const snackbarStateAtom = atom<SnackbarState>({
   key: RecoilAtomKeys.SNACKBAR_STATE,
   default: {
     isOpen: false,
