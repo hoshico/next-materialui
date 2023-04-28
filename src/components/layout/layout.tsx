@@ -13,7 +13,6 @@ import {
   Toolbar,
   Typography
 } from '@mui/material';
-import { useCustomSnackbar, useSnackbar } from 'components/snackbar/hooks';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -24,8 +23,6 @@ const Layout = ({ children }: any) => {
     router.push(path);
     setOpenDrawer(false);
   };
-  const { snackbarState } = useCustomSnackbar();
-  const { closeSnackbar } = useSnackbar();
 
   return (
     <>
@@ -116,19 +113,6 @@ const Layout = ({ children }: any) => {
       </Drawer>
       {/*通知バー*/}
       <Box pt={10}>{children}</Box>
-      <Snackbar
-        open={snackbarState.isOpen}
-        autoHideDuration={6000}
-        onClose={closeSnackbar}
-      >
-        <Alert
-          onClose={closeSnackbar}
-          severity={snackbarState.severity}
-          sx={{ width: '100%' }}
-        >
-          {snackbarState.text}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

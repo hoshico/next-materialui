@@ -8,7 +8,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { useSnackbar } from 'components/snackbar/hooks';
+import { useNotification } from 'components/snackbar/hooks';
 import { ChangeEvent, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
@@ -56,13 +56,13 @@ const reactForm = () => {
     //e.target.value = '';
   };
 
-  const { openSnackbar, closeSnackbar } = useSnackbar();
+  const { onOpenNotification, onCloseNotification } = useNotification();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
     console.log('ファイル情報: ', file);
     console.log(data);
-    openSnackbar({ text: '送信しました', severity: 'success' });
+    onOpenNotification({ message: '送信しました', severity: 'success' });
   };
 
   return (
@@ -145,9 +145,13 @@ const reactForm = () => {
               hidden
             />
           </Box>
-          <Button type="button" onClick={showFolder}>ファイル登録</Button>
+          <Button type="button" onClick={showFolder}>
+            ファイル登録
+          </Button>
           <Typography>{file?.name}</Typography>
-          <Button type="button" onClick={() => setFile(null)}>ファイル削除</Button>
+          <Button type="button" onClick={() => setFile(null)}>
+            ファイル削除
+          </Button>
         </Grid>
         <Grid mt={2}>
           <Grid mt={2} container>

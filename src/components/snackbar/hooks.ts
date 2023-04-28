@@ -6,7 +6,7 @@ type SnackbarState = {
   isOpen: boolean;
   severity: AlertColor;
   variant: 'standard';
-  message: '';
+  message: string;
   vertical: 'botton';
   horizontal: 'center';
 };
