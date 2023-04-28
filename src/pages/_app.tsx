@@ -8,6 +8,7 @@ import theme from '../../styles/theme';
 import createEmotionCache from '../../src/lib/createEmotionCache';
 import Layout from 'components/layout/layout';
 import { RecoilRoot } from 'recoil';
+import NotificationBar from 'components/snackbar/NotificationBar';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -29,6 +30,7 @@ const App = (props: MyAppProps) => {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Layout>
+            <NotificationBar />
             <Component {...pageProps} />
           </Layout>
         </ThemeProvider>

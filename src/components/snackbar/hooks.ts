@@ -4,40 +4,46 @@ import { RecoilAtomKeys } from '../../store/recoilKeys';
 
 type SnackbarState = {
   isOpen: boolean;
-  text: string;
   severity: AlertColor;
+  variant: 'standard';
+  message: '';
+  vertical: 'botton';
+  horizontal: 'center';
 };
 
-type SnackbarParams = Pick<SnackbarState, 'text' | 'severity'>;
+type SnackbarParams = Pick<SnackbarState, 'message' | 'severity'>;
 
 export const snackbarStateAtom = atom<SnackbarState>({
   key: RecoilAtomKeys.SNACKBAR_STATE,
   default: {
     isOpen: false,
-    text: '',
-    severity: 'info'
+    severity: 'success',
+    variant: 'standard',
+    message: '',
+    vertical: 'botton',
+    horizontal: 'center'
   }
 });
 
-export const useSnackbar = () => {
-  const setSnackbarState = useSetRecoilState(snackbarStateAtom);
+export const useNotification = () => {
+  const [notificationState, setNotificationState] =
+    useRecoilState(snackbarStateAtom);
 
-  const openSnackbar = ({ text, severity }: SnackbarParams) => {
-    setSnackbarState({
+  const onOpenNotification = ({ message, severity }: SnackbarParams) => {
+    setNotificationState({
       isOpen: true,
-      text,
-      severity
+      severity,
+      variant: 'standard',
+      message,
+      vertical: 'botton',
+      horizontal: 'center'
     });
   };
 
-  const closeSnackbar = () => {
-    setSnackbarState({
-      isOpen: false,
-      text: '',
-      severity: 'info'
-    });
+  const onCloseNotification = () => {
+    setNotificationState({ ...notificationState, ...{ isOpen: false } });
   };
-  return { openSnackbar, closeSnackbar };
+  return { onOpenNotification, onCloseNotification };
 };
 
 export const useCustomSnackbar = () => {
