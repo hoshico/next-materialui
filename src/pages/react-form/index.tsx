@@ -5,10 +5,11 @@ import {
   FormControlLabel,
   Grid,
   Stack,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import { useSnackbar } from 'components/snackbar/hooks';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type Inputs = {
@@ -45,13 +46,14 @@ const reactForm = () => {
     }
   });
 
-  console.log('ファイル情報: ', file);
   const selectFile = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('value情報', e.target.value);
+    console.log('target情報', e.target);
     const files = e.target.files;
     if (files && files.length !== 0) {
       setFile(files[0]);
     }
-    e.target.value = '';
+    //e.target.value = '';
   };
 
   const { openSnackbar, closeSnackbar } = useSnackbar();
@@ -140,10 +142,12 @@ const reactForm = () => {
               accept=".png, .jpeg, .jpg "
               ref={filePickerRef}
               onChange={(e) => selectFile(e)}
-              style={{ display: 'none' }}
+              hidden
             />
           </Box>
-          <Button onClick={showFolder}>ファイル登録</Button>
+          <Button type="button" onClick={showFolder}>ファイル登録</Button>
+          <Typography>{file?.name}</Typography>
+          <Button type="button" onClick={() => setFile(null)}>ファイル削除</Button>
         </Grid>
         <Grid mt={2}>
           <Grid mt={2} container>
