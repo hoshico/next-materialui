@@ -71,10 +71,13 @@ export const useNotification = () => {
       }
   );
 
-  const onCloseNotification = useRecoilCallback(({ reset }) => () => {
-    //set(snackbarStateAtom, (preState) => preState);
-    reset(snackbarStateAtom);
-  });
+  const onCloseNotification = useRecoilCallback(
+    ({ snapshot: { getPromise }, set, reset }) =>
+      async () => {
+        //set(snackbarStateAtom, await getPromise(snackbarStateAtom));
+        reset(snackbarStateAtom);
+      }
+  );
 
   return {
     onOpenNotification,
