@@ -1,6 +1,7 @@
 import { AlertColor } from '@mui/material';
 import {
   atom,
+  selectorFamily,
   useRecoilCallback,
   useRecoilState,
   useSetRecoilState
@@ -18,7 +19,7 @@ type NotificationState = {
 
 type SnackbarParams = Pick<NotificationState, 'message' | 'severity'>;
 
-export const snackbarStateAtom = atom<NotificationState>({
+export const notificationStateAtom = atom<NotificationState>({
   key: RecoilAtomKeys.SNACKBAR_STATE,
   default: {
     isOpen: false,
@@ -52,8 +53,6 @@ export const snackbarStateAtom = atom<NotificationState>({
 //};
 
 export const useNotification = () => {
-  const [notificationState, setNotificationState] =
-    useRecoilState(snackbarStateAtom);
   // state変更処理
   const onOpenNotification = useRecoilCallback(
     ({ set }) =>
@@ -67,17 +66,15 @@ export const useNotification = () => {
           vertical: 'botton',
           horizontal: 'center'
         };
-        set(snackbarStateAtom, newState);
+        set(notificationStateAtom, newState);
       }
   );
 
-  const onCloseNotification = useRecoilCallback(
-    ({ snapshot: { getPromise }, set, reset }) =>
-      async () => {
-        //set(snackbarStateAtom, await getPromise(snackbarStateAtom));
-        reset(snackbarStateAtom);
-      }
-  );
+  const onCloseNotification = useRecoilCallback(({ set }) => () => {
+    set(notificationStateAtom, (pre: NotificationState) => {
+      return { ...pre, ...{ isOpen: false } };
+    });
+  });
 
   return {
     onOpenNotification,
@@ -85,8 +82,38 @@ export const useNotification = () => {
   };
 };
 
-export const useCustomSnackbar = () => {
-  const [snackbarState, setSnackbarState] = useRecoilState(snackbarStateAtom);
-
-  return { snackbarState, setSnackbarState };
-};
+//const notificationSelector = selectorFamily<
+//  NotificationState | undefined,
+//  { message: string; severity: AlertColor }
+//>({
+//  key: 'NotificationSelector',
+//  get:
+//    ({ message, severity }) =>
+//    ({ get }) => {
+//      const state = get(notificationStateAtom);
+//      const newState: NotificationState = {
+//        isOpen: true,
+//        severity,
+//        variant: 'standard',
+//        message,
+//        vertical: 'botton',
+//        horizontal: 'center'
+//      };
+//      return newState;
+//    }
+//});
+//
+//const useNotification = () => {
+//  const onOpenNotification = ({message, severity}) => {
+//
+//  }
+//
+//  return {onOpenNotification}
+//};
+//export const useCustomSnackbar = () => {
+//  const [snackbarState, setSnackbarState] = useRecoilState(
+//    notificationStateAtom
+//  );
+//
+//  return { snackbarState, setSnackbarState };
+//};

@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil';
-import { snackbarStateAtom, useNotification } from './hooks';
+import { notificationStateAtom, useNotification } from './hooks';
 import { Alert, Snackbar } from '@mui/material';
 
 const NotificationBar = () => {
   const { onCloseNotification } = useNotification();
-  const notificationState = useRecoilValue(snackbarStateAtom);
+  const notificationState = useRecoilValue(notificationStateAtom);
   const { isOpen, message, severity } = notificationState;
 
   if (!notificationState) return null;
