@@ -56,7 +56,7 @@ const reactForm = () => {
     //e.target.value = '';
   };
 
-  const { onOpenNotification, onCloseNotification } = useNotification();
+  const { onOpenNotification } = useNotification();
 
   // dataでアクセスできる
   const onSubmit = (data: Inputs) => {
