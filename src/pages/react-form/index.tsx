@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { useNotification } from 'components/snackbar/hooks';
-import { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 type Inputs = {

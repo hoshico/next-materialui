@@ -30,27 +30,6 @@ export const notificationStateAtom = atom<NotificationState>({
     horizontal: 'center'
   }
 });
-//
-//export const useNotification = () => {
-//  const [notificationState, setNotificationState] =
-//    useRecoilState(snackbarStateAtom);
-//
-//  const onOpenNotification = ({ message, severity }: SnackbarParams) => {
-//    setNotificationState({
-//      isOpen: true,
-//      severity,
-//      variant: 'standard',
-//      message,
-//      vertical: 'botton',
-//      horizontal: 'center'
-//    });
-//  };
-//
-//  const onCloseNotification = () => {
-//    setNotificationState({ ...notificationState, ...{ isOpen: false } });
-//  };
-//  return { onOpenNotification, onCloseNotification };
-//};
 
 export const useNotification = () => {
   // state変更処理
