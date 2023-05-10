@@ -8,6 +8,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import { Modal } from 'components/modal/Modal';
 import { useNotification } from 'components/snackbar/hooks';
 import { ChangeEvent, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -55,6 +56,9 @@ const reactForm = () => {
     }
     //e.target.value = '';
   };
+
+  const [showModal, setShowModal] = useState(false);
+  const handlItem = (result: string) => {};
 
   const { onOpenNotification } = useNotification();
 
@@ -134,6 +138,13 @@ const reactForm = () => {
             />
           </Grid>
         </Grid>
+        {/*モーダル*/}
+        <Button onClick={() => setShowModal(true)}>テキスト入力モーダル</Button>
+        <Modal
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+          onSelect={handlItem}
+        />
         {/*ファイル登録*/}
         <Grid>
           <Box hidden>
