@@ -139,7 +139,9 @@ const reactForm = () => {
           </Grid>
         </Grid>
         {/*モーダル*/}
-        <Button onClick={() => setShowModal(true)}>テキスト入力モーダル</Button>
+        <Button variant="contained" onClick={() => setShowModal(true)}>
+          テキスト入力モーダル
+        </Button>
         <Modal
           visible={showModal}
           onClose={() => setShowModal(false)}
