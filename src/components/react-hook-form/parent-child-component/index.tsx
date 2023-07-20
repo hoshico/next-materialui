@@ -1,22 +1,51 @@
-import { Box, Button, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography
+} from '@mui/material';
 import { TextFieldcontrol } from 'components/react-hook-form/parent-child-component/TextfieldControl';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { ErrorSharp } from '@mui/icons-material';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 type Inputs = {
   title: string;
 };
 
 const schema = z.object({
-  title: z.string().min(1, { message: '１文字以上入力してください' }).max(10, { message: '10文字以内で入力' })
+  title: z
+    .string()
+    .min(1, { message: '１文字以上入力してください' })
+    .max(10, { message: '10文字以内で入力' })
 });
 
 type InputsKeys = Array<keyof Inputs>;
 
 const ParentChild = () => {
+  const router = useRouter();
+
+  const pageChangeHandler = () => {
+    const answer = window.confirm('リセットされますよ良いですか？');
+    if (!answer) {
+      throw 'Abort route';
+    }
+  };
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', pageChangeHandler);
+    return () => {
+      router.events.off('routeChangeStart', pageChangeHandler);
+    };
+  }, []);
+
   const useFormMethods = useForm({
     defaultValues: {
       title: '',
@@ -36,7 +65,12 @@ const ParentChild = () => {
 
   return (
     <FormProvider {...useFormMethods}>
-      <Stack m={4} component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+      <Stack
+        m={4}
+        component="form"
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {/*ControllerコンポーネントでReactHookFormを紐付け*/}
 
         {/*タイトル*/}

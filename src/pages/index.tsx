@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/Home.module.css'
 import About from './about'
+import { useForm } from 'react-hook-form'
 
 const Home: NextPage = () => {
   return (
