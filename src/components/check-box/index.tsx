@@ -29,7 +29,7 @@ export const CheckBox = (props: Props) => {
   const disabled = watch()[title]?.length > 0;
 
   const onSubmit = (data: any) => {
-    console.log(data[title]);
+    console.log(data[title]); // ["腰痛", "肩凝り"] のような値を取得できる
   };
 
   return (
