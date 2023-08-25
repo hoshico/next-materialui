@@ -1,9 +1,7 @@
 import Select from 'components/select';
 import { NextPage } from 'next';
 
-interface Props {}
-
-const index: NextPage<Props> = () => {
+const index: NextPage = () => {
   return <Select />;
 };
 
