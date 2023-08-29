@@ -21,7 +21,6 @@ export const CheckBox = (props: Props) => {
     register,
     watch,
     handleSubmit,
-    formState: { isDirty, dirtyFields }
   } = useForm({
     mode: 'onChange'
   });
